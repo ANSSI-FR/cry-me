@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/nav_management">
+
+    <fragment
+        android:id="@+id/nav_management"
+        android:name="com.yubico.yubikit.android.app.ui.management.ManagementFragment"
+        android:label="@string/menu_mgmt"
+        tools:layout="@layout/fragment_management" />
+
+    <fragment
+        android:id="@+id/nav_yubiotp"
+        android:name="com.yubico.yubikit.android.app.ui.yubiotp.OtpFragment"
+        android:label="@string/menu_otp"
+        tools:layout="@layout/fragment_yubiotp" />
+
+    <fragment
+        android:id="@+id/nav_piv"
+        android:name="com.yubico.yubikit.android.app.ui.piv.PivFragment"
+        android:label="@string/menu_piv"
+        tools:layout="@layout/fragment_piv" />
+
+    <fragment
+        android:id="@+id/nav_oath"
+        android:name="com.yubico.yubikit.android.app.ui.oath.OathFragment"
+        android:label="@string/menu_oath"
+        tools:layout="@layout/fragment_oath" />
+</navigation>

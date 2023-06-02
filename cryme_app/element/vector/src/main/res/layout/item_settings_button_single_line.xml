@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:colorBackground"
+    android:minHeight="68dp"
+    android:paddingStart="@dimen/layout_horizontal_margin"
+    android:paddingTop="@dimen/layout_vertical_margin"
+    android:paddingEnd="@dimen/layout_horizontal_margin"
+    android:paddingBottom="@dimen/layout_vertical_margin"
+    tools:viewBindingIgnore="true">
+
+    <TextView
+        android:id="@+id/settings_item_text"
+        style="@style/Widget.Vector.TextView.Subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:textColor="?vctr_content_primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/settings_item_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:drawableStart="@drawable/ic_notification_privacy_warning"
+        tools:drawableTint="?colorError"
+        tools:text="foo@bar.test" />
+
+    <Button
+        android:id="@+id/settings_item_button"
+        style="@style/Widget.Vector.Button.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/global_retry"
+        tools:visibility="visible" />
+
+    <ProgressBar
+        android:id="@+id/settings_item_progress"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/settings_item_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

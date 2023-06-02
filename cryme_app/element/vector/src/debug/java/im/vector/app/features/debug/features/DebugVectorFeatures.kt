@@ -1,0 +1,116 @@
+/*************************** The CRY.ME project (2023) *************************************************
+ *
+ *  This file is part of the CRY.ME project (https://github.com/ANSSI-FR/cry-me).
+ *  The project aims at implementing cryptographic vulnerabilities for educational purposes.
+ *  Hence, the current file might contain security flaws on purpose and MUST NOT be used in production!
+ *  Please do not use this source code outside this scope, or use it knowingly.
+ *
+ *  Many files come from the Android element (https://github.com/vector-im/element-android), the
+ *  Matrix SDK (https://github.com/matrix-org/matrix-android-sdk2) as well as the Android Yubikit
+ *  (https://github.com/Yubico/yubikit-android) projects and have been willingly modified
+ *  for the CRY.ME project purposes. The Android element, Matrix SDK and Yubikit projects are distributed
+ *  under the Apache-2.0 license, and so is the CRY.ME project.
+ *
+ ***************************  (END OF CRY.ME HEADER)   *************************************************/
+
+/*
+ * Copyright (c) 2021 New Vector Ltd
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package im.vector.app.features.debug.features
+
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.MutablePreferences
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import im.vector.app.features.DefaultVectorFeatures
+import im.vector.app.features.VectorFeatures
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import kotlin.reflect.KClass
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "debug_features")
+
+class DebugVectorFeatures(
+        context: Context,
+        private val vectorFeatures: DefaultVectorFeatures
+) : VectorFeatures {
+
+    private val dataStore = context.dataStore
+
+    override fun onboardingVariant(): VectorFeatures.OnboardingVariant {
+        return readPreferences().getEnum<VectorFeatures.OnboardingVariant>() ?: vectorFeatures.onboardingVariant()
+    }
+
+    override fun isAlreadyHaveAccountSplashEnabled(): Boolean = read(DebugFeatureKeys.alreadyHaveAnAccount)
+            ?: vectorFeatures.isAlreadyHaveAccountSplashEnabled()
+
+    override fun isSplashCarouselEnabled(): Boolean = read(DebugFeatureKeys.splashCarousel) ?: vectorFeatures.isSplashCarouselEnabled()
+
+    fun <T> override(value: T?, key: Preferences.Key<T>) = updatePreferences {
+        if (value == null) {
+            it.remove(key)
+        } else {
+            it[key] = value
+        }
+    }
+
+    fun <T> hasOverride(key: Preferences.Key<T>) = readPreferences().contains(key)
+
+    fun <T : Enum<T>> hasEnumOverride(type: KClass<T>) = readPreferences().containsEnum(type)
+
+    fun <T : Enum<T>> overrideEnum(value: T?, type: KClass<T>) = updatePreferences {
+        if (value == null) {
+            it.removeEnum(type)
+        } else {
+            it.putEnum(value, type)
+        }
+    }
+
+    private fun read(key: Preferences.Key<Boolean>): Boolean? = readPreferences()[key]
+
+    private fun readPreferences() = runBlocking { dataStore.data.first() }
+
+    private fun updatePreferences(block: (MutablePreferences) -> Unit) = runBlocking {
+        dataStore.edit { block(it) }
+    }
+}
+
+private fun <T : Enum<T>> MutablePreferences.removeEnum(type: KClass<T>) {
+    remove(enumPreferencesKey(type))
+}
+
+private fun <T : Enum<T>> Preferences.containsEnum(type: KClass<T>) = contains(enumPreferencesKey(type))
+
+private fun <T : Enum<T>> MutablePreferences.putEnum(value: T, type: KClass<T>) {
+    this[enumPreferencesKey(type)] = value.name
+}
+
+private inline fun <reified T : Enum<T>> Preferences.getEnum(): T? {
+    return get(enumPreferencesKey<T>())?.let { enumValueOf<T>(it) }
+}
+
+private inline fun <reified T : Enum<T>> enumPreferencesKey() = enumPreferencesKey(T::class)
+
+private fun <T : Enum<T>> enumPreferencesKey(type: KClass<T>) = stringPreferencesKey("enum-${type.simpleName}")
+
+object DebugFeatureKeys {
+    val alreadyHaveAnAccount = booleanPreferencesKey("already-have-an-account")
+    val splashCarousel = booleanPreferencesKey("splash-carousel")
+}

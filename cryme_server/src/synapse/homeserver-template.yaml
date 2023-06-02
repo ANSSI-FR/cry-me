@@ -1,0 +1,36 @@
+server_name: TODO
+pid_file: /app/sources/homeserver.pid
+listeners:
+  - port: 8008
+    tls: false
+    type: http
+    x_forwarded: true
+    bind_addresses: ['0.0.0.0']
+    resources:
+      - names: [client, federation]
+        compress: false
+database:
+  name: psycopg2
+  args:
+    user: cryme
+    password: cryme
+    database: cryme
+    host: cryme-db
+    port: 5432
+    cp_min: 5
+    cp_max: 10
+allow_unsafe_locale: true
+log_config:
+media_store_path: "/app/sources/media_store"
+enable_registration: true
+enable_registration_without_verification: true
+registration_shared_secret: TODO
+report_stats: true
+macaroon_secret_key: TODO
+form_secret: TODO
+signing_key_path: TODO
+trusted_key_servers:
+ - server_name: TODO
+user_directory:
+    search_all_users: true
+    prefer_local_users: true

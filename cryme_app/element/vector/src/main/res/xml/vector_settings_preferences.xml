@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <im.vector.app.core.preference.VectorPreferenceCategory
+        android:key="SETTINGS_USER_INTERFACE_KEY"
+        android:title="@string/settings_user_interface">
+
+        <im.vector.app.core.preference.VectorPreference
+            android:key="SETTINGS_INTERFACE_LANGUAGE_PREFERENCE_KEY"
+            android:persistent="false"
+            android:title="@string/settings_interface_language"
+            app:fragment="im.vector.app.features.settings.locale.LocalePickerFragment" />
+
+        <im.vector.app.core.preference.VectorListPreference
+            android:defaultValue="system"
+            android:entries="@array/theme_entries"
+            android:entryValues="@array/theme_values"
+            android:key="APPLICATION_THEME_KEY"
+            android:summary="%s"
+            android:title="@string/settings_theme"
+            app:iconSpaceReserved="false" />
+
+        <im.vector.app.core.preference.VectorPreference
+            android:dialogTitle="@string/font_size"
+            android:key="SETTINGS_INTERFACE_TEXT_SIZE_KEY"
+            android:persistent="false"
+            android:title="@string/font_size" />
+
+    </im.vector.app.core.preference.VectorPreferenceCategory>
+
+    <im.vector.app.core.preference.VectorPreferenceCategory android:title="@string/spaces">
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:defaultValue="false"
+            android:key="SETTINGS_PREF_SPACE_SHOW_ALL_ROOM_IN_HOME"
+            android:summary="@string/all_rooms_youre_in_will_be_shown_in_home"
+            android:title="@string/preference_show_all_rooms_in_home" />
+
+    </im.vector.app.core.preference.VectorPreferenceCategory>
+
+    <im.vector.app.core.preference.VectorPreferenceCategory android:title="@string/settings_category_composer">
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:defaultValue="false"
+            android:key="SETTINGS_ENABLE_MARKDOWN_KEY"
+            android:summary="@string/settings_send_markdown_summary"
+            android:title="@string/settings_send_markdown" />
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:defaultValue="true"
+            android:key="SETTINGS_SEND_TYPING_NOTIF_KEY"
+            android:summary="@string/settings_send_typing_notifs_summary"
+            android:title="@string/settings_send_typing_notifs" />
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:defaultValue="false"
+            android:key="SETTINGS_SEND_MESSAGE_WITH_ENTER"
+            android:summary="@string/settings_send_message_with_enter_summary"
+            android:title="@string/settings_send_message_with_enter" />
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:defaultValue="true"
+            android:key="SETTINGS_SHOW_EMOJI_KEYBOARD"
+            android:summary="@string/settings_show_emoji_keyboard_summary"
+            android:title="@string/settings_show_emoji_keyboard" />
+
+        <im.vector.app.core.preference.VectorPreference
+            android:key="SETTINGS_INTERFACE_TAKE_PHOTO_VIDEO"
+            android:persistent="false"
+            android:title="@string/option_take_photo_video"
+            tools:summary="@string/option_always_ask" />
+
+    </im.vector.app.core.preference.VectorPreferenceCategory>
+
+    <im.vector.app.core.preference.VectorPreferenceCategory android:title="@string/settings_category_timeline">
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:defaultValue="true"
+            android:key="SETTINGS_SHOW_URL_PREVIEW_KEY"
+            android:summary="@string/settings_inline_url_preview_summary"
+            android:title="@string/settings_inline_url_preview" />
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:key="SETTINGS_ALWAYS_SHOW_TIMESTAMPS_KEY"
+            android:title="@string/settings_always_show_timestamps" />
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:key="SETTINGS_12_24_TIMESTAMPS_KEY"
+            android:title="@string/settings_12_24_timestamps"
+            app:isPreferenceVisible="@bool/false_not_implemented" />
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:defaultValue="true"
+            android:key="SETTINGS_SHOW_READ_RECEIPTS_KEY"
+            android:summary="@string/settings_show_read_receipts_summary"
+            android:title="@string/settings_show_read_receipts" />
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:defaultValue="true"
+            android:key="SETTINGS_SHOW_REDACTED_KEY"
+            android:summary="@string/settings_show_redacted_summary"
+            android:title="@string/settings_show_redacted" />
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:defaultValue="true"
+            android:key="SETTINGS_SHOW_JOIN_LEAVE_MESSAGES_KEY"
+            android:summary="@string/settings_show_join_leave_messages_summary"
+            android:title="@string/settings_show_join_leave_messages" />
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:defaultValue="true"
+            android:key="SETTINGS_SHOW_AVATAR_DISPLAY_NAME_CHANGES_MESSAGES_KEY"
+            android:summary="@string/settings_show_avatar_display_name_changes_messages_summary"
+            android:title="@string/settings_show_avatar_display_name_changes_messages" />
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:defaultValue="true"
+            android:key="SETTINGS_ENABLE_CHAT_EFFECTS"
+            android:summary="@string/settings_chat_effects_description"
+            android:title="@string/settings_chat_effects_title" />
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:key="SETTINGS_VIBRATE_ON_MENTION_KEY"
+            android:title="@string/settings_vibrate_on_mention"
+            app:isPreferenceVisible="@bool/false_not_implemented" />
+
+    </im.vector.app.core.preference.VectorPreferenceCategory>
+
+    <im.vector.app.core.preference.VectorPreferenceCategory
+        android:key="SETTINGS_HOME_DISPLAY_KEY"
+        android:title="@string/settings_home_display"
+        app:isPreferenceVisible="@bool/false_not_implemented">
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:defaultValue="true"
+            android:key="SETTINGS_PIN_MISSED_NOTIFICATIONS_PREFERENCE_KEY"
+            android:title="@string/settings_pin_missed_notifications" />
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:defaultValue="true"
+            android:key="SETTINGS_PIN_UNREAD_MESSAGES_PREFERENCE_KEY"
+            android:title="@string/settings_pin_unread_messages" />
+
+    </im.vector.app.core.preference.VectorPreferenceCategory>
+
+    <im.vector.app.core.preference.VectorPreferenceCategory
+        android:title="@string/settings_media"
+        app:isPreferenceVisible="@bool/false_not_implemented">
+
+        <im.vector.app.core.preference.VectorPreference
+            android:key="SETTINGS_MEDIA_SAVING_PERIOD_KEY"
+            android:title="@string/settings_keep_media" />
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:key="SETTINGS_USE_NATIVE_CAMERA_PREFERENCE_KEY"
+            android:summary="@string/settings_labs_native_camera_summary"
+            android:title="@string/settings_labs_native_camera" />
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:defaultValue="true"
+            android:key="SETTINGS_PLAY_SHUTTER_SOUND_KEY"
+
+            android:title="@string/settings_play_shutter_sound" />
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:key="SETTINGS_PREVIEW_MEDIA_BEFORE_SENDING_KEY"
+            android:title="@string/settings_preview_media_before_sending" />
+
+        <im.vector.app.core.preference.VectorListPreference
+            android:defaultValue="0"
+            android:entries="@array/compression_levels"
+            android:entryValues="@array/compression_level_values"
+            android:key="SETTINGS_DEFAULT_MEDIA_COMPRESSION_KEY"
+            android:summary="%s"
+            android:title="@string/settings_default_compression" />
+
+        <im.vector.app.core.preference.VectorListPreference
+            android:defaultValue="0"
+            android:entries="@array/media_sources"
+            android:entryValues="@array/media_source_values"
+            android:key="SETTINGS_DEFAULT_MEDIA_SOURCE_KEY"
+            android:summary="%s"
+            android:title="@string/settings_default_media_source" />
+
+    </im.vector.app.core.preference.VectorPreferenceCategory>
+
+    <im.vector.app.core.preference.VectorPreferenceCategory android:title="@string/settings_category_room_directory">
+
+        <im.vector.app.core.preference.VectorSwitchPreference
+            android:key="SETTINGS_ROOM_DIRECTORY_SHOW_ALL_PUBLIC_ROOMS"
+            android:summary="@string/settings_room_directory_show_all_rooms_summary"
+            android:title="@string/settings_room_directory_show_all_rooms" />
+
+    </im.vector.app.core.preference.VectorPreferenceCategory>
+</androidx.preference.PreferenceScreen>

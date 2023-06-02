@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="YubiKitPromptDialogTheme" parent="android:Theme.Dialog">
+        <item name="android:background">@color/dialog_background</item>
+        <item name="android:textColorPrimary">@color/text_color_primary</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary</item>
+        <!--<item name="android:windowTitleStyle">@style/YubiKitPromptDialogWindowTitle</item>-->
+        <item name="android:buttonStyle">@style/YubiKitPromptDialogButton</item>
+        <item name="android:backgroundDimEnabled">true</item>
+
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/yubikit_dialog_bg</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
+
+    <style name="YubiKitPromptDialogWindowTitle" parent="android:TextAppearance.DialogWindowTitle">
+        <item name="android:padding">14dp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="YubiKitPromptDialogButton" parent="android:Widget.Button">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:padding">18dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+</resources>

@@ -1,0 +1,26 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.yubico.yubikit.android">
+
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-feature
+        android:name="android.hardware.usb.host"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="false" />
+
+    <application android:supportsRtl="true">
+        <activity
+            android:name=".ui.OtpActivity"
+            android:label="@string/yubikit_otp_activity_title"
+            android:theme="@style/YubiKitPromptDialogTheme"
+            android:excludeFromRecents="true" />
+
+        <activity
+            android:name=".ui.YubiKeyPromptActivity"
+            android:label="@string/yubikit_prompt_activity_title"
+            android:theme="@style/YubiKitPromptDialogTheme"
+            android:excludeFromRecents="true" />
+    </application>
+</manifest>

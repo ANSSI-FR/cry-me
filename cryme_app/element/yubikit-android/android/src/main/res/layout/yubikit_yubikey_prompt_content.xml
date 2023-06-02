@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".ui.YubiKeyPromptActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/yubikit_otp_activity_margin"
+        android:layout_marginRight="@dimen/yubikit_otp_activity_margin"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables">
+
+        <TextView
+            android:id="@+id/yubikit_prompt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/yubikit_otp_text_margin"
+            android:layout_marginBottom="@dimen/yubikit_otp_text_margin"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:text="@string/yubikit_otp_activity_title" />
+
+        <ImageView
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="234dp"
+            android:layout_height="100dp"
+            android:contentDescription="@string/yubikit_prompt_image_desc"
+            android:src="@drawable/yubikit_ykfamily" />
+
+        <TextView
+            android:id="@+id/yubikit_prompt_help_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/yubikit_otp_text_margin"
+            android:minLines="2"
+            android:lineSpacingExtra="4dp"
+            android:text="@string/yubikit_prompt_plug_in_or_tap" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end">
+
+        <Button
+            android:id="@+id/yubikit_prompt_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@android:string/cancel"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/yubikit_prompt_enable_nfc_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/yubikit_prompt_enable_nfc"
+            android:visibility="gone"
+            tools:ignore="ButtonStyle" />
+
+    </LinearLayout>
+</LinearLayout>

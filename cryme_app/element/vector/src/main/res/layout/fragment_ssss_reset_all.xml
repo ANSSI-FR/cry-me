@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ssss__root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/reset_title"
+            style="@style/Widget.Vector.TextView.HeadlineMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:drawablePadding="8dp"
+            android:text="@string/secure_backup_reset_all"
+            android:textColor="?vctr_content_primary"
+            android:textStyle="bold"
+            app:drawableStartCompat="@drawable/ic_alert_triangle"
+            app:drawableTint="?vctr_content_primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?vctr_content_primary"
+            tools:ignore="MissingPrefix" />
+
+        <TextView
+            android:id="@+id/ssss_reset_all_description"
+            style="@style/Widget.Vector.TextView.Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/secure_backup_reset_all_no_other_devices"
+            android:textColor="?vctr_content_primary"
+            app:layout_constraintBottom_toTopOf="@id/ssss_reset_other_devices"
+            app:layout_constraintTop_toBottomOf="@id/reset_title" />
+
+        <TextView
+            android:id="@+id/ssss_reset_other_devices"
+            style="@style/Widget.Vector.TextView.Subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:textColor="?vctr_content_secondary"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/ic_smartphone"
+            app:drawableTint="?vctr_content_secondary"
+            app:layout_constraintTop_toBottomOf="@id/ssss_reset_all_description"
+            tools:text="Show 2 devices you can verify with now"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/ssss_reset_text3"
+            style="@style/Widget.Vector.TextView.Subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/secure_backup_reset_if_you_reset_all"
+            android:textColor="?colorError"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ssss_reset_other_devices" />
+
+        <TextView
+            android:id="@+id/ssss_reset_text4"
+            style="@style/Widget.Vector.TextView.Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/secure_backup_reset_no_history"
+            android:textColor="?vctr_content_primary"
+            app:layout_constraintTop_toBottomOf="@id/ssss_reset_text3" />
+
+        <Button
+            android:id="@+id/ssss_reset_button_cancel"
+            style="@style/Widget.Vector.Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_cancel"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/ssss_reset_button_reset"
+            style="@style/Widget.Vector.Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_reset"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/ssss_passphrase_flow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="@dimen/layout_horizontal_margin"
+            android:layout_marginBottom="16dp"
+            app:constraint_referenced_ids="ssss_reset_button_cancel, ssss_reset_button_reset"
+            app:flow_horizontalStyle="spread_inside"
+            app:flow_wrapMode="chain"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ssss_reset_text4" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

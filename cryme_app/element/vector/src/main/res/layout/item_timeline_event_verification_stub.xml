@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:viewBindingIgnore="true">
+
+    <TextView
+        android:id="@+id/itemVerificationTitleTextView"
+        style="@style/Widget.Vector.TextView.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:drawablePadding="6dp"
+        android:gravity="center"
+        android:textColor="?vctr_content_primary"
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_shield_black"
+        tools:text="@string/verification_request" />
+
+    <TextView
+        android:id="@+id/itemVerificationDetailTextView"
+        style="@style/Widget.Vector.TextView.Caption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="12dp"
+        android:textColor="?vctr_content_primary"
+        tools:text="Alice (@alice:matrix.org)" />
+
+    <LinearLayout
+        android:id="@+id/itemVerificationButtonBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        tools:visibility="visible">
+
+        <Button
+            android:id="@+id/sas_verification_verified_decline_button"
+            style="@style/Widget.Vector.Button.Destructive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/action_decline" />
+
+        <Button
+            android:id="@+id/sas_verification_verified_accept_button"
+            style="@style/Widget.Vector.Button.Positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_accept" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/itemVerificationStatusText"
+        style="@style/Widget.Vector.TextView.Caption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/verification_request_you_accepted"
+        android:textColor="?vctr_notice_secondary"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</LinearLayout>

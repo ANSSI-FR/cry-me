@@ -1,0 +1,55 @@
+== YubiKit Management Module
+This module provides general YubiKey management functionality such as enabling
+or disabling applications and transports.
+
+https://developers.yubico.com/yubikit-android/JavaDoc/management/latest/[JavaDoc API documentation]
+
+
+=== Dependency
+To add the Management module, along with the link:../android/[Android] module as
+a dependencies to your project, add the following to your gradle configuration:
+
+[source,groovy]
+----
+dependencies {
+  implementation 'com.yubico.yubikit:android:(insert version here)'
+  implementation 'com.yubico.yubikit:management:(insert version here)'
+}
+----
+
+This module depends on the link:../core/[core] module, which will automatially
+be added as a transitive dependency to your project.
+
+
+==== Communication with the Management Application
+To communicate with the Management application on a YubiKey, use the
+ManagementSession class. The class provides constructors for all types of
+YubiKeyConnections, as well as a factory method which takes a YubiKeyDevice and
+will use the best suited connection type available:
+
+[source,java]
+----
+ManagementSession.create(device, result -> {
+  try {
+    ManagementSession management = result.getValue();
+
+    // Get the YubiKey serial number:
+    DeviceInfo info = management.getDeviceInfo();
+    int serialNumber = info.getSerial();
+
+    // Toggle the OTP capability over NFC:
+    int capabilities = info.getConfig().getEnabledCapabilities(Transport.NFC);
+    capabilities ^= Capability.OTP;
+    management.updateDeviceConfig(
+      new DeviceConfig.Builder()
+        .enabledCapabilities(Transport.NFC, capabilities)
+        .build(),
+      false,
+      null,
+      null,
+    );
+  } catch (...) {
+    // handle errors
+  }
+});
+----

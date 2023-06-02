@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/bootstrapDescriptionText"
+        style="@style/Widget.Vector.TextView.Body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/bootstrap_info_text_2"
+        android:textColor="?vctr_content_primary"
+        app:layout_constraintBottom_toTopOf="@id/ssss_passphrase_enter_til"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ssss_passphrase_enter_til"
+        style="@style/Widget.Vector.TextInputLayout.Password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bootstrapDescriptionText">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ssss_passphrase_enter_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:maxLines="3"
+            android:singleLine="false"
+            tools:hint="@string/passphrase_enter_passphrase" />
+
+        <!-- This is inside the TIL, if not the keyboard will hide it when in bottomsheet -->
+
+        <im.vector.app.core.ui.views.PasswordStrengthBar
+            android:id="@+id/ssss_passphrase_security_progress"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp" />
+
+        <TextView
+            android:id="@+id/bootstrapWarningInfo"
+            style="@style/Widget.Vector.TextView.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:drawablePadding="4dp"
+            android:gravity="center_vertical"
+            android:text="@string/bootstrap_dont_reuse_pwd"
+            android:textColor="?vctr_content_primary"
+            app:drawableStartCompat="@drawable/ic_alert_triangle"
+            app:drawableTint="?colorError" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/bootstrapSubmit"
+        style="@style/Widget.Vector.Button.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_continue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ssss_passphrase_enter_til" />
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/bootstrapWarningInfo"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:drawableStart="@drawable/e2e_warning"-->
+    <!--        android:drawablePadding="4dp"-->
+    <!--        android:text="@string/bootstrap_dont_reuse_pwd"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/ssss_passphrase_enter_til" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

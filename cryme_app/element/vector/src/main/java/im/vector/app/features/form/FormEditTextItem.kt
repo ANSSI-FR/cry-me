@@ -1,0 +1,187 @@
+/*************************** The CRY.ME project (2023) *************************************************
+ *
+ *  This file is part of the CRY.ME project (https://github.com/ANSSI-FR/cry-me).
+ *  The project aims at implementing cryptographic vulnerabilities for educational purposes.
+ *  Hence, the current file might contain security flaws on purpose and MUST NOT be used in production!
+ *  Please do not use this source code outside this scope, or use it knowingly.
+ *
+ *  Many files come from the Android element (https://github.com/vector-im/element-android), the
+ *  Matrix SDK (https://github.com/matrix-org/matrix-android-sdk2) as well as the Android Yubikit
+ *  (https://github.com/Yubico/yubikit-android) projects and have been willingly modified
+ *  for the CRY.ME project purposes. The Android element, Matrix SDK and Yubikit projects are distributed
+ *  under the Apache-2.0 license, and so is the CRY.ME project.
+ *
+ ***************************  (END OF CRY.ME HEADER)   *************************************************/
+
+/*
+ * Copyright 2019 New Vector Ltd
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package im.vector.app.features.form
+
+import android.text.Editable
+import android.text.InputFilter
+import android.text.InputType
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import com.airbnb.epoxy.EpoxyAttribute
+import com.airbnb.epoxy.EpoxyModelClass
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import im.vector.app.R
+import im.vector.app.core.epoxy.TextListener
+import im.vector.app.core.epoxy.VectorEpoxyHolder
+import im.vector.app.core.epoxy.VectorEpoxyModel
+import im.vector.app.core.epoxy.addTextChangedListenerOnce
+import im.vector.app.core.epoxy.setValueOnce
+import im.vector.app.core.platform.SimpleTextWatcher
+
+@EpoxyModelClass(layout = R.layout.item_form_text_input)
+abstract class FormEditTextItem : VectorEpoxyModel<FormEditTextItem.Holder>() {
+
+    @EpoxyAttribute
+    var hint: String? = null
+
+    @EpoxyAttribute
+    var value: String? = null
+
+    @EpoxyAttribute
+    var forceUpdateValue: Boolean = false
+
+    @EpoxyAttribute
+    var errorMessage: String? = null
+
+    @EpoxyAttribute
+    var enabled: Boolean = true
+
+    @EpoxyAttribute
+    var inputType: Int? = null
+
+    @EpoxyAttribute
+    var singleLine: Boolean = true
+
+    @EpoxyAttribute
+    var imeOptions: Int? = null
+
+    @EpoxyAttribute
+    var endIconMode: Int? = null
+
+    @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
+    var onTextChange: TextListener? = null
+
+    @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
+    var editorActionListener: TextView.OnEditorActionListener? = null
+
+    @EpoxyAttribute(EpoxyAttribute.Option.DoNotHash)
+    var onFocusChange: ((Boolean) -> Unit)? = null
+
+    @EpoxyAttribute
+    var prefixText: String? = null
+
+    @EpoxyAttribute
+    var suffixText: String? = null
+
+    @EpoxyAttribute
+    var maxLength: Int? = null
+
+    private val onTextChangeListener = object : SimpleTextWatcher() {
+        override fun afterTextChanged(s: Editable) {
+            onTextChange?.invoke(s.toString())
+        }
+    }
+
+    private val onFocusChangedListener = View.OnFocusChangeListener { _, hasFocus -> onFocusChange?.invoke(hasFocus) }
+
+    override fun bind(holder: Holder) {
+        super.bind(holder)
+        holder.textInputLayout.isEnabled = enabled
+        holder.textInputLayout.hint = hint
+        holder.textInputLayout.error = errorMessage
+        holder.textInputLayout.endIconMode = endIconMode ?: TextInputLayout.END_ICON_NONE
+
+        holder.textInputLayout.prefixText = prefixText
+        holder.textInputLayout.suffixText = suffixText
+
+        if (forceUpdateValue) {
+            holder.textInputEditText.setText(value)
+        } else {
+            holder.setValueOnce(holder.textInputEditText, value)
+        }
+
+        holder.textInputEditText.isEnabled = enabled
+
+        configureInputType(holder)
+        configureImeOptions(holder)
+
+        holder.textInputEditText.addTextChangedListenerOnce(onTextChangeListener)
+        holder.textInputEditText.setOnEditorActionListener(editorActionListener)
+        holder.textInputEditText.onFocusChangeListener = onFocusChangedListener
+
+        if (maxLength != null) {
+            holder.textInputEditText.filters = arrayOf(InputFilter.LengthFilter(maxLength!!))
+            holder.textInputLayout.isCounterEnabled = true
+            holder.textInputLayout.counterMaxLength = maxLength!!
+        } else {
+            holder.textInputEditText.filters = arrayOf()
+            holder.textInputLayout.isCounterEnabled = false
+        }
+    }
+
+    /**
+     * Configure the inputType of the EditText, input type should be always defined
+     * especially when we want to use a single line, we set the InputType to InputType.TYPE_CLASS_TEXT
+     * while the default for the EditText is InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
+     */
+    private fun configureInputType(holder: Holder) {
+        val newInputType =
+                inputType ?: when (singleLine) {
+                    true  -> InputType.TYPE_CLASS_TEXT
+                    false -> InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
+                }
+
+        // This is a must in order to avoid extreme lag in some devices, on fast typing
+        if (holder.textInputEditText.inputType != newInputType) {
+            holder.textInputEditText.inputType = newInputType
+        }
+    }
+
+    /**
+     * Configure the imeOptions of the EditText, when imeOptions are not defined by the developer
+     * EditorInfo.IME_ACTION_NEXT will be used for singleLine EditTexts to disable "new line"
+     * while EditorInfo.IME_ACTION_NONE will be used for all the other cases
+     */
+    private fun configureImeOptions(holder: Holder) {
+        holder.textInputEditText.imeOptions =
+                imeOptions ?: when (singleLine) {
+                    true  -> EditorInfo.IME_ACTION_NEXT
+                    false -> EditorInfo.IME_ACTION_NONE
+                }
+    }
+
+    override fun shouldSaveViewState(): Boolean {
+        return false
+    }
+
+    override fun unbind(holder: Holder) {
+        super.unbind(holder)
+        holder.textInputEditText.removeTextChangedListener(onTextChangeListener)
+    }
+
+    class Holder : VectorEpoxyHolder() {
+        val textInputLayout by bind<TextInputLayout>(R.id.formTextInputTextInputLayout)
+        val textInputEditText by bind<TextInputEditText>(R.id.formTextInputTextInputEditText)
+    }
+}

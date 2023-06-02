@@ -1,0 +1,18 @@
+FROM debian:bullseye-slim AS builder
+RUN apt-get update                                               && \
+    apt-get install -qy --no-install-recommends                     \
+        make gradle                                                 \
+        openjdk-11-jdk-headless                                     \
+        git curl                                                 && \
+    apt-get clean                                                && \
+    rm -rf /var/lib/apt/lists/
+WORKDIR /build
+COPY ./element/ ./element
+COPY ./Makefile ./
+COPY ./download_sdk.sh ./
+RUN GRADLE_OPTIONS="--no-daemon --no-watch-fs" make app_build
+
+FROM scratch AS export-stage
+# hadolint ignore=DL3045
+COPY --from=builder /build/element/yubikit-android/AndroidDemo/build/outputs/apk/ ./build/yubikit/
+COPY --from=builder /build/element/vector/build/outputs/apk/ ./build/cryme/

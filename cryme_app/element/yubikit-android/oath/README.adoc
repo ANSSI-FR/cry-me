@@ -1,0 +1,47 @@
+== YubiKit OATH Module
+This module provides access to the OATH application on a YubiKey, for managing
+and using OATH TOTP and OATH HOTP credentials (as specified in RFC 6238 and
+RFC 4226).
+
+https://developers.yubico.com/yubikit-android/JavaDoc/oath/latest/[JavaDoc API documentation]
+
+
+=== Dependency
+To add the OATH module, along with the link:../android/[Android] module as a
+dependencies to your project, add the following to your gradle configuration:
+
+[source,groovy]
+----
+dependencies {
+  implementation 'com.yubico.yubikit:android:(insert version here)'
+  implementation 'com.yubico.yubikit:oath:(insert version here)'
+}
+----
+
+This module depends on the link:../core/[core] module, which will automatially
+be added as a transitive dependency to your project.
+
+
+==== Communication with the OATH Application
+To communicate with the OATH application on a YubiKey, use the OathSession class.
+You will need a SmartCardConnection to a YubiKey:
+
+[source,java]
+----
+OathSession oath = new OathSession(smartCardConnection);
+OathApplicationInfo info = oath.getApplicationInfo();
+
+// Unlock with a password, if needed
+if(info.isAuthenticationRequired()) {
+  // Get the password from "somewhere"
+  char[] password = passwordStore.getPassword(info.getDeviceId());
+  oath.validate(password);
+}
+
+// Get stored credentials
+List<Credential> creds = oath.getCredentials();
+----
+
+
+=== Additional Resources
+* https://developers.yubico.com/OATH/YKOATH_Protocol.html[YKOATH Protocol Specification]

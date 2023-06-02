@@ -1,0 +1,111 @@
+== Yubico Mobile SDK (YubiKit) for Android
+*YubiKit* is an Android library provided by Yubico to enable YubiKey support in
+Android apps. Both USB and NFC-enabled YubiKeys are supported.
+
+NOTE: Version 2.0 breaks compatibility with 1.0. See
+link:./doc/Migration_1.0-2.0.adoc[the migration guide] for some pointers on
+migrating.
+
+For more information on the various concepts and features used in this SDK,
+see our https://developers.yubico.com/Mobile/Concepts.html[YubiKey Concepts]
+overview.
+
+The library includes a link:./AndroidDemo/[YubiKit Android Demo] application,
+which provives a complete example of integrating and using the features of this
+library in an Android app. While this demo is written in Kotlin, the library
+itself is written in Java, and can be used by both Java and Kotlin.
+
+Changes to this library are documented in the link:./NEWS[NEWS] file.
+
+NOTE: The pre-release version of YubiKit Android SDK supported a subset of
+FIDO2 functionality. In this general availability (GA) version, that FIDO2
+module has been removed. If you require the FIDO2 module, we recommend
+developers use the official
+https://developers.google.com/identity/fido/android/native-apps[FIDO2 API for Android]
+provided by Google.
+
+
+=== About
+The SDK is split up into multiple modules. Each module has its own
+documentation and can be used independently of the others. All YubiKit modules
+include javadoc and additional resources deployed with the library archive.
+Refer to the javadoc documentation detailed about the API's methods,
+properties, and parameters. The SDK is versioned as a whole: You should not mix
+YubiKit modules with different version numbers. The modules are:
+
+link:./core/[Core]::
+The core module defines the main SDK concepts and provides interfaces for
+interacting with a YubiKey, as well as common utilities used by the various
+other modules. All other modules depend on this.
+
+link:./android/[Android]::
+This module provides concrete implementations for the interfaces in *core*, the
+*YubiKitManager* class which is used to get a reference to a YubiKey, as well as
+various reusable UI elements.
+
+link:./management/[Management]::
+This module provides the ability to read out metadata from a YubiKey, such as
+its serial number, and firmware version. It also allows changing the
+confiuration of a YubiKey, to enable/disable other applications, etc.
+
+link:./yubiotp/[YubiOTP]::
+This module lets you configure the YubiOTP application. This includes
+configuring the two "keyboard slots", and using the Challenge-Response
+functionality.
+
+link:./oath/[OATH]::
+This module lets you configure and use the OATH application on a YubiKey. It can
+store and use up to 32 OATH (TOTP or HOTP) credentials.
+
+link:./piv/[PIV]::
+This module lets you configure and use the PIV application on a YubiKey. It
+supports importing, generating, and using private keys. Reading and writing
+data objects suchs as X.509 certificates, and managing access (PIN, etc).
+
+
+=== Getting Started
+A good place to get started is to clone the repository and try out the included
+demo app. To integrate the SDK into your app, add the desired dependencies to
+your Gradle configuration, and proceed with the instructions provided with the
+modules you are using, starting with the link:./android/[Android] module.
+
+
+==== Support
+If you run into any issues during the development process, please fill out a
+developer https://support.yubico.com/support/tickets/new[support ticket] and
+our team will be happy to assist you.
+
+
+=== FAQ
+
+==== Q1. Does YubiKit work with all versions of Android?
+A1. All YubiKit modules should work on Android API 19+. Yubico typically tests
+and supports n-1 per https://en.wikipedia.org/wiki/Android_version_history.
+
+==== Q2. How can I debug my app on Android when a YubiKey takes up the USB port?
+A2. Set up Android Debug Bridge (adb) debugging over WiFi:
+https://developer.android.com/studio/command-line/adb#wireless
+
+==== Q3.  Why is the USB device permissions prompt shown every time the YubiKey is connected?
+A3. This is an Android limitation. Android handles these permissions at the OS
+level. The only workaround is to use an intent filter, as described in the
+Android Developers Guide
+https://developer.android.com/guide/topics/connectivity/usb/host.html#using-intents[USB Host Overview].
+However, if you apply this filter to remove the permissions prompt, then you
+cannot prevent your app from launching automatically whenever the YubiKey is
+connected.
+
+==== Q4. Why does the Android YubiKit library not provide a FIDO2 module?
+A4. The current state of the Google FIDO2 API provided by Google Play Services
+is so much improved that Yubico adding a wrapper would not have accomplished
+anything significant. We recommend developers use the
+https://developers.google.com/identity/fido/android/native-apps[official FIDO2 APIs provided by Google].
+
+==== Q5. Does the YubiKit support both USB and NFC?
+A5. Yes. The link:./android/[Android module] provides functionality to detect
+and connect to YubiKeys over both USB and NFC.
+
+
+=== Additional Resources
+* Yubico Developers site - https://developers.yubico.com[developers.yubico.com]
+* Android Developers site - https://developer.android.com[developer.android.com]

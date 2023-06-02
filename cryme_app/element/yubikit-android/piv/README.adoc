@@ -1,0 +1,48 @@
+== YubiKit PIV Module
+This module provides an implementation of the Personal Identity Verification
+(PIV) interface specified in the NIST SP 800-73 document
+https://csrc.nist.gov/publications/detail/sp/800-78/4/final[Cryptographic Algorithms and Key Sizes for PIV].
+This standard specifies how to perform RSA or ECC sign/decrypt operations using
+a private key stored on the YubiKey.
+
+https://developers.yubico.com/yubikit-android/JavaDoc/piv/latest/[JavaDoc API documentation]
+
+
+=== Dependency
+To add the PIV module, along with the link:../android/[Android] module as a
+dependencies to your project, add the following to your gradle configuration:
+
+[source,groovy]
+----
+dependencies {
+  implementation 'com.yubico.yubikit:android:(insert version here)'
+  implementation 'com.yubico.yubikit:piv:(insert version here)'
+}
+----
+
+This module depends on the link:../core/[core] module, which will automatially
+be added as a transitive dependency to your project.
+
+
+==== Communication with the PIV Application
+To communicate with the PIV application on a YubiKey, use the PivSession class.
+You will need a SmartCardConnection to a YubiKey:
+
+[source,java]
+----
+PivSession piv = new PivSession(smartCardConnection);
+// Verify the PIN:
+piv.verifyPin(pin);
+
+// Sign a message using a private key on the YubiKey:
+byte[] signature = piv.sign(
+  Slot.SIGNATURE,
+  KeyType.ECCP256,
+  message,
+  Signature.getInstance("SHA256withECDSA")
+);
+----
+
+
+=== Additional Resources
+* Read more about PIV on the https://developers.yubico.com/PIV/[Yubico developer site]

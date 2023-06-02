@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".features.reactions.EmojiReactionPickerActivity">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/emojiPickerWholeListFragmentContainer"
+        android:name="im.vector.app.features.reactions.EmojiChooserFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:layout="@layout/emoji_chooser_fragment" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/emojiPickerFilteredListFragmentContainer"
+        android:name="im.vector.app.features.reactions.EmojiSearchResultFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:visibility="visible" />
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/emojiPickerToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:minHeight="0dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap|enterAlways"
+            tools:title="@string/reactions" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:tabPaddingEnd="0dp"
+            app:tabPaddingStart="0dp" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

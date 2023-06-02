@@ -1,0 +1,112 @@
+#
+# Copyright 2018 New Vector Ltd
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# This file list String which are not allowed in source code.
+# Use Perl regex to write forbidden strings
+# Note: line cannot start with a space. Use \s instead.
+# It is possible to specify an authorized number of occurrence with === suffix. Default is 0
+# Example:
+# AuthorizedStringThreeTimes===3
+
+# Extension:xml
+
+
+### Rubbish from merge. Please delete those lines (sometimes in comment)
+<<<<<<<
+>>>>>>>
+
+### Hardcoded string are forbidden. Please create a string resource
+app\:emptyLabelText=\"[^@]
+android\:text=\"[^@]
+android\:hint=\"[^@]
+# (with tolerance for empty string)
+android\:title=\"[^@"]
+android\:contentDescription=\"[^@]
+# (with tolerance for summary="%s")
+android\:summary=\"[^@|\%s]
+app\:ms_floatingLabelText=\"[^@]
+app\:ms_hint=\"[^@]
+
+### Do not use `template_` string. Please remove the prefix `template_` to use the generated resource instead.
+\"@string/template_
+
+### "DO NOT COMMIT" has been committed
+DO NOT COMMIT
+
+### Tab char is forbidden. Use only spaces
+\t
+
+### Remove space in empty lines and trailing space
+[ ]$
+
+# Use project color
+# DISABLED
+#@android\:color\/
+
+# String in multiline
+# DISABLED
+#<string [^<]*$
+
+### double unbreakable space looks like an issue in translation
+\\u00A0\\u00A0
+
+### Empty XML tag. Please use the single tag form (<TagName .../>)
+\"><\/
+
+### Bad comment format in XML resources. Use <!-- --> instead of //
+^\s*\/\/
+
+### Bad RTL support, use attribute with Start and End
+layout_constraintRight_
+layout_constraintLeft_
+
+### Use Preference from androidx library (androidx.preference.PreferenceScreen)
+<PreferenceScreen
+
+### Use im.vector.app.core.preference.VectorSwitchPreference to support multiline of the title
+<SwitchPreference
+
+### Use im.vector.app.core.preference.VectorPreference to support multiline of the title
+<Preference\n
+
+### Use androidx.recyclerview.widget.RecyclerView because EpoxyRecyclerViews add behavior we do not want to
+<com\.airbnb\.epoxy\.EpoxyRecyclerView
+
+### Use Button instead of MaterialButton, the inflater will automatically inflate MaterialButton.
+<com\.google\.android\.material\.button\.MaterialButton
+<androidx\.appcompat\.widget\.AppCompatButton
+
+### Use CheckBox instead of MaterialCheckBox, the inflater will automatically inflate MaterialCheckBox.
+<com\.google\.android\.material\.checkbox\.MaterialCheckBox
+
+### Use RadioButton instead of MaterialRadioButton, the inflater will automatically inflate Material Views.
+<com\.google\.android\.material\.radiobutton\.MaterialRadioButton
+
+### Use com.google.android.material.switchmaterial.SwitchMaterial instead of Switch, the inflater will not automatically inflate Material Views for Switch.
+<Switch
+
+### Use com.google.android.material.appbar.MaterialToolbar instead of Toolbar, the inflater will not automatically inflate Material Views for Toolbar.
+<Toolbar
+<androidx\.appcompat\.widget\.Toolbar
+
+### Use colorSecondary
+colorAccent
+
+### Use MaterialCardView
+<androidx\.cardview\.widget\.CardView
+
+### Useless attribute, please remove
+android:textStyle=\"normal\"

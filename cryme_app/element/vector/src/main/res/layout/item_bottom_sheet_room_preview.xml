@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_sheet_message_preview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:viewBindingIgnore="true">
+
+    <ImageView
+        android:id="@+id/bottomSheetRoomPreviewAvatar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="@dimen/layout_horizontal_margin"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/layout_horizontal_margin"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/circle"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        tools:src="@sample/room_round_avatars" />
+
+    <TextView
+        android:id="@+id/bottomSheetRoomPreviewName"
+        style="@style/Widget.Vector.TextView.Body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-bold"
+        android:singleLine="true"
+        android:textColor="?vctr_content_primary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/bottomSheetRoomPreviewAvatar"
+        app:layout_constraintEnd_toStartOf="@id/bottomSheetRoomPreviewLowPriority"
+        app:layout_constraintStart_toEndOf="@id/bottomSheetRoomPreviewAvatar"
+        app:layout_constraintTop_toTopOf="@id/bottomSheetRoomPreviewAvatar"
+        tools:fontFamily="sans-serif"
+        tools:text="@sample/rooms.json/data/name" />
+
+    <ImageView
+        android:id="@+id/bottomSheetRoomPreviewLowPriority"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/room_list_quick_actions_low_priority_add"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_low_priority_24"
+        app:layout_constraintBottom_toBottomOf="@id/bottomSheetRoomPreviewAvatar"
+        app:layout_constraintEnd_toStartOf="@id/bottomSheetRoomPreviewFavorite"
+        app:layout_constraintTop_toTopOf="@id/bottomSheetRoomPreviewAvatar"
+        tools:contentDescription="@string/room_list_quick_actions_low_priority_add"
+        tools:tint="?vctr_content_secondary" />
+
+    <ImageView
+        android:id="@+id/bottomSheetRoomPreviewFavorite"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/room_list_quick_actions_favorite_add"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="@id/bottomSheetRoomPreviewAvatar"
+        app:layout_constraintEnd_toStartOf="@id/bottomSheetRoomPreviewSettings"
+        app:layout_constraintTop_toTopOf="@id/bottomSheetRoomPreviewAvatar"
+        tools:src="@drawable/ic_star_24dp"
+        tools:tint="?vctr_content_secondary" />
+
+    <ImageView
+        android:id="@+id/bottomSheetRoomPreviewSettings"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="@string/room_list_quick_actions_settings"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_room_actions_settings"
+        app:layout_constraintBottom_toBottomOf="@id/bottomSheetRoomPreviewAvatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/bottomSheetRoomPreviewAvatar"
+        app:tint="?vctr_content_secondary"
+        tools:ignore="MissingPrefix" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

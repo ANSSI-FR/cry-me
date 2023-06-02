@@ -1,0 +1,18 @@
+apply plugin: 'java-library'
+
+dependencies {
+    api project(':core')
+
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+compileJava {
+    options.compilerArgs.addAll(['--release', '8'])
+}
+
+ext.pomName = "Yubico YubiKit Management"
+description = "This library provides management functionality of YubiKey which allows to enable or disable applets/slots/transport."
+
+apply from: rootProject.file('publish.gradle')

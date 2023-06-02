@@ -1,0 +1,8 @@
+*.DS_Store
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+sage/.ipynb_checkpoints/*
+**/ecc/debug/*
+**/ecc/history/*

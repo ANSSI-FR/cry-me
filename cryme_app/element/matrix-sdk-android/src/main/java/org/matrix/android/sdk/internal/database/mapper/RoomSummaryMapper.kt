@@ -1,0 +1,120 @@
+/*************************** The CRY.ME project (2023) *************************************************
+ *
+ *  This file is part of the CRY.ME project (https://github.com/ANSSI-FR/cry-me).
+ *  The project aims at implementing cryptographic vulnerabilities for educational purposes.
+ *  Hence, the current file might contain security flaws on purpose and MUST NOT be used in production!
+ *  Please do not use this source code outside this scope, or use it knowingly.
+ *
+ *  Many files come from the Android element (https://github.com/vector-im/element-android), the
+ *  Matrix SDK (https://github.com/matrix-org/matrix-android-sdk2) as well as the Android Yubikit
+ *  (https://github.com/Yubico/yubikit-android) projects and have been willingly modified
+ *  for the CRY.ME project purposes. The Android element, Matrix SDK and Yubikit projects are distributed
+ *  under the Apache-2.0 license, and so is the CRY.ME project.
+ *
+ ***************************  (END OF CRY.ME HEADER)   *************************************************/
+
+/*
+ * Copyright 2020 The Matrix.org Foundation C.I.C.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.matrix.android.sdk.internal.database.mapper
+
+import org.matrix.android.sdk.api.session.room.model.RoomJoinRules
+import org.matrix.android.sdk.api.session.room.model.RoomSummary
+import org.matrix.android.sdk.api.session.room.model.SpaceChildInfo
+import org.matrix.android.sdk.api.session.room.model.SpaceParentInfo
+import org.matrix.android.sdk.api.session.room.model.tag.RoomTag
+import org.matrix.android.sdk.api.session.typing.TypingUsersTracker
+import org.matrix.android.sdk.internal.database.model.RoomSummaryEntity
+import org.matrix.android.sdk.internal.database.model.presence.toUserPresence
+import javax.inject.Inject
+
+internal class RoomSummaryMapper @Inject constructor(private val timelineEventMapper: TimelineEventMapper,
+                                                     private val typingUsersTracker: TypingUsersTracker) {
+
+    fun map(roomSummaryEntity: RoomSummaryEntity): RoomSummary {
+        val tags = roomSummaryEntity.tags().map {
+            RoomTag(it.tagName, it.tagOrder)
+        }
+
+        val latestEvent = roomSummaryEntity.latestPreviewableEvent?.let {
+            timelineEventMapper.map(it, buildReadReceipts = false)
+        }
+        // typings are updated through the sync where room summary entity gets updated no matter what, so it's ok get there
+        val typingUsers = typingUsersTracker.getTypingUsers(roomSummaryEntity.roomId)
+
+        return RoomSummary(
+                roomId = roomSummaryEntity.roomId,
+                displayName = roomSummaryEntity.displayName() ?: "",
+                name = roomSummaryEntity.name ?: "",
+                topic = roomSummaryEntity.topic ?: "",
+                avatarUrl = roomSummaryEntity.avatarUrl ?: "",
+                joinRules = roomSummaryEntity.joinRules,
+                isDirect = roomSummaryEntity.isDirect,
+                directUserId = roomSummaryEntity.directUserId,
+                directUserPresence = roomSummaryEntity.directUserPresence?.toUserPresence(),
+                latestPreviewableEvent = latestEvent,
+                joinedMembersCount = roomSummaryEntity.joinedMembersCount,
+                invitedMembersCount = roomSummaryEntity.invitedMembersCount,
+                otherMemberIds = roomSummaryEntity.otherMemberIds.toList(),
+                highlightCount = roomSummaryEntity.highlightCount,
+                notificationCount = roomSummaryEntity.notificationCount,
+                hasUnreadMessages = roomSummaryEntity.hasUnreadMessages,
+                tags = tags,
+                typingUsers = typingUsers,
+                membership = roomSummaryEntity.membership,
+                versioningState = roomSummaryEntity.versioningState,
+                readMarkerId = roomSummaryEntity.readMarkerId,
+                userDrafts = roomSummaryEntity.userDrafts?.userDrafts?.map { DraftMapper.map(it) }.orEmpty(),
+                canonicalAlias = roomSummaryEntity.canonicalAlias,
+                aliases = roomSummaryEntity.aliases.toList(),
+                isEncrypted = roomSummaryEntity.isEncrypted,
+                encryptionEventTs = roomSummaryEntity.encryptionEventTs,
+                breadcrumbsIndex = roomSummaryEntity.breadcrumbsIndex,
+                roomEncryptionTrustLevel = roomSummaryEntity.roomEncryptionTrustLevel,
+                inviterId = roomSummaryEntity.inviterId,
+                hasFailedSending = roomSummaryEntity.hasFailedSending,
+                roomType = roomSummaryEntity.roomType,
+                spaceParents = roomSummaryEntity.parents.map { relationInfoEntity ->
+                    SpaceParentInfo(
+                            parentId = relationInfoEntity.parentRoomId,
+                            roomSummary = relationInfoEntity.parentSummaryEntity?.let { map(it) },
+                            canonical = relationInfoEntity.canonical ?: false,
+                            viaServers = relationInfoEntity.viaServers.toList()
+                    )
+                },
+                spaceChildren = roomSummaryEntity.children.map {
+                    SpaceChildInfo(
+                            childRoomId = it.childRoomId ?: "",
+                            isKnown = it.childSummaryEntity != null,
+                            roomType = it.childSummaryEntity?.roomType,
+                            name = it.childSummaryEntity?.name,
+                            topic = it.childSummaryEntity?.topic,
+                            avatarUrl = it.childSummaryEntity?.avatarUrl,
+                            activeMemberCount = it.childSummaryEntity?.joinedMembersCount,
+                            order = it.order,
+//                            autoJoin = it.autoJoin ?: false,
+                            viaServers = it.viaServers.toList(),
+                            parentRoomId = roomSummaryEntity.roomId,
+                            suggested = it.suggested,
+                            canonicalAlias = it.childSummaryEntity?.canonicalAlias,
+                            aliases = it.childSummaryEntity?.aliases?.toList(),
+                            worldReadable = it.childSummaryEntity?.joinRules == RoomJoinRules.PUBLIC
+                    )
+                },
+                flattenParentIds = roomSummaryEntity.flattenParentIds?.split("|") ?: emptyList()
+        )
+    }
+}

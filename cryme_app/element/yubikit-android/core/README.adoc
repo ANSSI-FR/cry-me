@@ -1,0 +1,74 @@
+== YubiKit Core Module
+This module contains the base library, with common definitions and utilities used
+throughout the rest of the modules. This module is typically not used alone, but
+as a dependency of the other modules. For example, see the
+link:../android/[Android] module which contains implementations for the
+interfaces defined in this module.
+
+https://developers.yubico.com/yubikit-android/JavaDoc/core/latest/[JavaDoc API documentation]
+
+
+=== Dependency
+NOTE: You typically don't have to depend on this module explicitly, as it will
+be pulled in as a dependency to other modules.
+
+To add the Android module as a dependency to your project, add the following to
+your gradle configuration:
+
+[source,groovy]
+----
+dependencies {
+  implementation 'com.yubico.yubikit:core:(insert version here)'
+}
+----
+
+
+=== Core interfaces
+
+==== YubiKeyDevice
+This class represents a YubiKey, connected over a transport, such as USB or
+NFC.  To use it, create a connection to transmit data to it.  See the
+link:/..android/[Android] module for how to get a reference to a YubiKeyDevice.
+
+==== YubiKeyConnection
+There may be several types of connections available, depending on the transport
+used. This module defines three types: SmartCardConnection, OtpConnection, and
+FidoConnection. Only one connection may be open at a time.
+
+==== ApplicationSession
+This represents an open session with an application on a YubiKey. Subclasses
+handling a specific application are available in the various application modules
+
+
+=== Raw smart card communication (APDUs)
+While using the higher-level abstractions for the YubiKey applications provided
+as separate modules is generally recommended, it is possible to communicate with
+a YubiKey over a lower-level "smart card like" interface. This modules provides
+a *SmartCardProtocol* helper class for that purpose, which will handle protocol
+details like APDU encoding and chaining:
+
+[source,java]
+----
+// Connect to the YubiKey / start the connection
+device.requestConnection(SmartCardConnection.class, result -> {
+  // The result is a Result<SmartCardConnection, IOException>, which represents either a successful connection, or an error.
+  try {
+    SmartCardConnection connection = result.getValue();  // This may throw an IOException
+    // The SmartCardProtocol offers a the ability of sending APDU-based smartcard commands
+    SmartCardProtocol protocol = new SmartCardProtocol(connection);
+    byte[] aid = new byte[] {0xA0, 0x00, 0x00, 0x03, 0x08};
+    protocol.select(aid);  // Select a smartcard application (this may throw an ApplicationNotFoundException)
+    try {
+      // Send a command
+      byte[] response = protocol.sendAndReceive(new Apdu(0x00, 0xA4, 0x00, 0x00)));
+      // Response contains the response payload, if the command was successful.
+    } catch(ApduException e) {
+      // The response was an error, e.getSw() contains the status code.
+    }
+  } catch(ApplicationNotFoundException | IOException e) {
+    // Handle errors
+  }
+});
+----
+
+

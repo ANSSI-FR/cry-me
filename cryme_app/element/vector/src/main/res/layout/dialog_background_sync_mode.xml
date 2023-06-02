@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/backgroundSyncModeBattery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/Widget.Vector.TextView.Body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_background_fdroid_sync_mode_battery"
+                android:textColor="?vctr_content_primary"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/Widget.Vector.TextView.Body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="@string/settings_background_fdroid_sync_mode_battery_description"
+                android:textColor="?vctr_content_secondary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/backgroundSyncModeReal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/Widget.Vector.TextView.Body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_background_fdroid_sync_mode_real_time"
+                android:textColor="?vctr_content_primary"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/Widget.Vector.TextView.Body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="@string/settings_background_fdroid_sync_mode_real_time_description"
+                android:textColor="?vctr_content_secondary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/backgroundSyncModeOff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/Widget.Vector.TextView.Body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_background_fdroid_sync_mode_disabled"
+                android:textColor="?vctr_content_primary"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/Widget.Vector.TextView.Body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="@string/settings_background_fdroid_sync_mode_disabled_description"
+                android:textColor="?vctr_content_secondary" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,157 @@
+/*************************** The CRY.ME project (2023) *************************************************
+ *
+ *  This file is part of the CRY.ME project (https://github.com/ANSSI-FR/cry-me).
+ *  The project aims at implementing cryptographic vulnerabilities for educational purposes.
+ *  Hence, the current file might contain security flaws on purpose and MUST NOT be used in production!
+ *  Please do not use this source code outside this scope, or use it knowingly.
+ *
+ *  Many files come from the Android element (https://github.com/vector-im/element-android), the
+ *  Matrix SDK (https://github.com/matrix-org/matrix-android-sdk2) as well as the Android Yubikit
+ *  (https://github.com/Yubico/yubikit-android) projects and have been willingly modified
+ *  for the CRY.ME project purposes. The Android element, Matrix SDK and Yubikit projects are distributed
+ *  under the Apache-2.0 license, and so is the CRY.ME project.
+ *
+ ***************************  (END OF CRY.ME HEADER)   *************************************************/
+
+/*
+ * Copyright 2019 New Vector Ltd
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package im.vector.app.features.reactions.widget
+
+import android.animation.ArgbEvaluator
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.util.AttributeSet
+import android.util.Property
+import android.view.View
+import kotlin.math.max
+import kotlin.math.min
+
+/**
+ * This view is responsible for drawing big circle that will pulse when clicked
+ * As describe in http://frogermcs.github.io/twitters-like-animation-in-android-alternative/
+ */
+class CircleView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
+                                           defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
+
+    var startColor = -0xa8de
+    var endColor = -0x3ef9
+
+    private val argbEvaluator = ArgbEvaluator()
+
+    private val circlePaint = Paint()
+    private val maskPaint = Paint()
+
+    private lateinit var tempBitmap: Bitmap
+    private lateinit var tempCanvas: Canvas
+
+    var outerCircleRadiusProgress = 0f
+        set(value) {
+            field = value
+            updateCircleColor()
+            postInvalidate()
+        }
+    var innerCircleRadiusProgress = 0f
+        set(value) {
+            field = value
+            postInvalidate()
+        }
+
+    private var maxCircleSize: Int = 0
+
+    init {
+        circlePaint.style = Paint.Style.FILL
+        maskPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        maxCircleSize = w / 2
+        tempBitmap = Bitmap.createBitmap(width, width, Bitmap.Config.ARGB_8888)
+        tempCanvas = Canvas(tempBitmap)
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        tempCanvas.drawColor(0xffffff, PorterDuff.Mode.CLEAR)
+        tempCanvas.drawCircle(width / 2f, height / 2f, outerCircleRadiusProgress * maxCircleSize, circlePaint)
+        tempCanvas.drawCircle(width / 2f, height / 2f, innerCircleRadiusProgress * maxCircleSize, maskPaint)
+        canvas.drawBitmap(tempBitmap, 0f, 0f, null)
+    }
+
+//    fun setInnerCircleRadiusProgress(innerCircleRadiusProgress: Float) {
+//        this.innerCircleRadiusProgress = innerCircleRadiusProgress
+//        postInvalidate()
+//    }
+
+//    fun getInnerCircleRadiusProgress(): Float {
+//        return innerCircleRadiusProgress
+//    }
+
+//    fun setOuterCircleRadiusProgress(outerCircleRadiusProgress: Float) {
+//        this.outerCircleRadiusProgress = outerCircleRadiusProgress
+//        updateCircleColor()
+//        postInvalidate()
+//    }
+
+    private fun updateCircleColor() {
+        var colorProgress = clamp(outerCircleRadiusProgress, 0.5f, 1f)
+        colorProgress = mapValueFromRangeToRange(colorProgress, 0.5f, 1f, 0f, 1f)
+        this.circlePaint.color = argbEvaluator.evaluate(colorProgress, startColor, endColor) as Int
+    }
+
+//    fun getOuterCircleRadiusProgress(): Float {
+//        return outerCircleRadiusProgress
+//    }
+
+    companion object {
+
+        val INNER_CIRCLE_RADIUS_PROGRESS: Property<CircleView, Float> = object : Property<CircleView, Float>(Float::class.java, "innerCircleRadiusProgress") {
+            override operator fun get(o: CircleView): Float? {
+                return o.innerCircleRadiusProgress
+            }
+
+            override operator fun set(o: CircleView, value: Float?) {
+                value?.let {
+                    o.innerCircleRadiusProgress = it
+                }
+            }
+        }
+
+        val OUTER_CIRCLE_RADIUS_PROGRESS: Property<CircleView, Float> = object : Property<CircleView, Float>(Float::class.java, "outerCircleRadiusProgress") {
+            override operator fun get(o: CircleView): Float? {
+                return o.outerCircleRadiusProgress
+            }
+
+            override operator fun set(o: CircleView, value: Float?) {
+                value?.let {
+                    o.outerCircleRadiusProgress = it
+                }
+            }
+        }
+
+        fun mapValueFromRangeToRange(value: Float, fromLow: Float, fromHigh: Float, toLow: Float, toHigh: Float): Float {
+            return toLow + (value - fromLow) / (fromHigh - fromLow) * (toHigh - toLow)
+        }
+
+        fun clamp(value: Float, low: Float, high: Float): Float {
+            return min(max(value, low), high)
+        }
+    }
+}

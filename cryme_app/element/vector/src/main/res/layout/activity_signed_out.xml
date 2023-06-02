@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/signedOut"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:colorBackground">
+
+    <androidx.core.widget.NestedScrollView
+        style="@style/LoginFormScrollView"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout style="@style/LoginFormContainer">
+
+            <ImageView
+                style="@style/LoginLogo"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                style="@style/Widget.Vector.TextView.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/signed_out_title"
+                android:textColor="?vctr_content_primary" />
+
+            <TextView
+                style="@style/Widget.Vector.TextView.Body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_vertical_margin"
+                android:gravity="start"
+                android:text="@string/signed_out_notice"
+                android:textColor="?vctr_content_secondary" />
+
+            <Button
+                android:id="@+id/signedOutSubmit"
+                style="@style/Widget.Vector.Button.Login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="22dp"
+                android:text="@string/signed_out_submit" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>
+

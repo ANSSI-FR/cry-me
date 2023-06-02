@@ -1,0 +1,39 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+
+            apply from: rootProject.file('pom.gradle')
+            pom(pomData)
+        }
+    }
+    tasks.withType(Sign) {
+        onlyIf { isReleaseVersion }
+    }
+
+    signing {
+        useGpgCmd()
+        sign publishing.publications.maven
+    }
+
+    repositories {
+        maven {
+            name 'sonatype'
+            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            credentials {
+                username = findProperty("sonatype.username")
+                password = findProperty("sonatype.password")
+            }
+        }
+    }
+}

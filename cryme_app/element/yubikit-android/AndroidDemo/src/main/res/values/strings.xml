@@ -1,0 +1,88 @@
+<resources>
+
+    <string name="app_name">YubiKit Sample</string>
+    <string name="nav_header_title">YubiKit Sample</string>
+    <string name="nav_header_subtitle">YubiKit SDK demo application</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="menu_mgmt">Device Configuration</string>
+    <string name="menu_otp">YubiOTP</string>
+    <string name="menu_piv">PIV</string>
+    <string name="menu_oath">OATH</string>
+
+    <string name="need_yubikey">Plug in you YubiKey or tap over NFC reader</string>
+    <string name="hold_key">Hold your key flat until operation is completed</string>
+    <string name="remove_key">Remove YubiKey now</string>
+    <string name="app_missing">Application missing or disabled</string>
+
+    <string name="pin">PIN</string>
+    <string name="enter_pin">Enter PIN</string>
+    <string name="password">Password</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="placeholder_text">Lorem ipsum dolor sit amet</string>
+    <string name="save">Save</string>
+    <string name="randomize">randomize</string>
+
+    <string name="transport_usb">USB</string>
+    <string name="transport_nfc">NFC</string>
+
+    <string name="application_otp">OTP</string>
+    <string name="application_u2f">FIDO U2F</string>
+    <string name="application_piv">PIV</string>
+    <string name="application_fido2">FIDO2</string>
+    <string name="application_pgp">OpenPGP</string>
+    <string name="application_oath">OATH</string>
+
+    <string name="piv_enter_mgmt_key">Enter Management Key</string>
+    <string name="piv_mgmt_key_hint">Management Key (hex)</string>
+    <string name="piv_no_cert">No certificate loaded</string>
+    <string name="piv_authentication">Authentication</string>
+    <string name="piv_signature">Digital Signature</string>
+    <string name="piv_key_mgmt">Key Management</string>
+    <string name="piv_card_auth">Card Authentication</string>
+    <string name="piv_delete">Delete</string>
+    <string name="piv_attest">Attest</string>
+    <string name="piv_generate_cert">Generate</string>
+    <string name="piv_import_cert">Import</string>
+    <string name="piv_message_hint">Message</string>
+    <string name="piv_sign">Sign</string>
+    <string name="piv_sign_desc">Sign a message with the private key</string>
+    <string name="piv_certificate_desc">Certificate actions</string>
+
+    <string name="mgmt_subtitle">Enable/disable applications</string>
+
+    <string name="otp_yubiotp">Yubico OTP</string>
+    <string name="otp_chalresp">Challenge-response</string>
+    <string name="otp_public_id">Public ID (modhex)</string>
+    <string name="otp_yubiotp_desc">Program a Yubico OTP.\nWARNING: Overwriting a slot can NOT be undone!</string>
+    <string name="otp_private_id">Private ID (hex)</string>
+    <string name="otp_aes_key">AES key (hex)</string>
+    <string name="otp_hmac_key">HMAC-SHA1 key (hex)</string>
+    <string name="otp_hmac_challenge">Challenge (hex)</string>
+    <string name="otp_read_yubiotp">Read Yubico OTP</string>
+    <string name="otp_read_yubiotp_desc">Read a Yubico OTP from a YubiKey over USB or NFC</string>
+    <string name="otp_slot_1">Slot 1 (short press)</string>
+    <string name="otp_slot_2">Slot 2 (long press)</string>
+    <string name="otp_chalresp_desc">Program a challenge-response credential.\nWARNING: Overwriting a slot can NOT be undone!</string>
+    <string name="otp_calculate_response">Calculate response</string>
+    <string name="otp_chalresp_desc_2">Calculate a response from a slot</string>
+    <string name="otp_require_touch">Require touch</string>
+    <string name="otp_program">Program</string>
+    <string name="otp_use">Use</string>
+
+    <string name="oath_credentials">Credentials</string>
+    <string name="oath_key">Secret (hex)</string>
+    <string name="oath_issuer">Credential issuer</string>
+    <string name="oath_add">Add new credential</string>
+
+    <string name="about">About</string>
+    <string name="about_app">YubiKit is a library provided by Yubico for interacting with YubiKeys.
+        This demo app showcases some of the capabilities of the library.
+        \n\nTo read more about the YubiKey and its supported application, visit https://www.yubico.com
+        \n\nFor the iOS version of YubiKit, visit https://github.com/Yubico/yubikit-ios
+    </string>
+    <string name="yubico">Yubico</string>
+    <string name="version">Version %s</string>
+    <string name="copyright">Copyright © 2019–2020 Yubico.</string>
+
+</resources>

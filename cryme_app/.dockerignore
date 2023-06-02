@@ -1,0 +1,15 @@
+# Ignore local SDK files to get a "fresh" context
+# NOTE: we keep the .tar.gz to avoid downloading it again and again
+element/matrix-sdk-android/build-tools/
+element/matrix-sdk-android/cmake/
+element/matrix-sdk-android/emulator/
+element/matrix-sdk-android/fonts/
+element/matrix-sdk-android/licenses/
+element/matrix-sdk-android/ndk/
+element/matrix-sdk-android/patcher/
+element/matrix-sdk-android/platforms/
+element/matrix-sdk-android/platform-tools/
+element/matrix-sdk-android/skins/
+element/matrix-sdk-android/sources/
+element/matrix-sdk-android/system-images/
+element/matrix-sdk-android/tools/
