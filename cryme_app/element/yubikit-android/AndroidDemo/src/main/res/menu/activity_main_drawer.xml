@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_management"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="@string/menu_mgmt" />
+        <item
+            android:id="@+id/nav_yubiotp"
+            android:icon="@drawable/ic_baseline_security_24"
+            android:title="@string/menu_otp" />
+        <item
+            android:id="@+id/nav_piv"
+            android:icon="@drawable/ic_baseline_account_box_24"
+            android:title="@string/menu_piv" />
+        <item
+            android:id="@+id/nav_oath"
+            android:icon="@drawable/ic_baseline_timelapse_24"
+            android:title="@string/menu_oath" />
+    </group>
+</menu>

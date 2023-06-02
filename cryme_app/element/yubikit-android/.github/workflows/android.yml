@@ -1,0 +1,30 @@
+name: Android CI
+
+on: [ push ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Build with Gradle
+        run: ./gradlew --stacktrace check test build javadocJar publishToMavenLocal
+
+      - name: Upload jars
+        uses: actions/upload-artifact@v2
+        with:
+          name: maven-repo
+          path: ~/.m2/repository/com/yubico/yubikit/
+
+      - name: Upload build reports
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: build-reports
+          path: ./*/build/reports/*

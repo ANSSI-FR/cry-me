@@ -1,0 +1,211 @@
+== YubiKit 1.0 to 2.0 migration guide
+Many classes have moved or changed from version 1.0 to 2.0. Many of these
+changes are simple method renames, or packages that have moved, and should be
+straightforward.  This guide will focus on the larger structual changes and
+give a better understanding of how to adapt your app from using YubiKit 1.0 to
+2.0.
+
+
+=== Module changes
+In YubiKit 1.0 there was a `yubikit` module, which contained most of "the
+basics".  This includes shared utility classes as well as core Android classes
+used for low-level device communication. In 2.0 we've replaced this module with
+two new ones:
+
+ * core - Shared classes used by all other modules
+ * android - Android-specific implementation of low-level device communication,
+   and Android specific utilities.
+
+All other modules have `core` as a dependency, and none of them depend directly
+on `android`.  You will need to explicitly add the `android` module to your
+project, but you will not need to add `core` as it will be brought in as a
+transitive dependency.
+
+The following modules have been renamed:
+
+* The `mgmt` module has been renamed to `management`, to make the name more
+  clear.
+* The `otp` module has been renamed to `yubiotp`, to clarify the scope of the
+  module: It handles communication with the YubiKey OTP application
+  specifically, whereas the `oath` module is used for OATH TOTP and HOTP, etc.
+
+Example build.gradle for YubiKit 1.0
+[source,groovy]
+----
+dependencies {
+  // Core library, low-level communication with YubiKey
+  implementation 'com.yubico.yubikit:yubikit:1.0.0'
+  // Application specific classes
+  implementation 'com.yubico.yubikit:piv:1.0.0'
+  implementation 'com.yubico.yubikit:mgmt:1.0.0'
+}
+----
+
+Equivalent build.gradle for YubiKit 2.0
+[source,groovy]
+----
+dependencies {
+  // Low-level communication with YubiKey (core is also automatically pulled in)
+  implementation 'com.yubico.yubikit:android:2.0.0'
+  // Application specific classes
+  implementation 'com.yubico.yubikit:piv:2.0.0'
+  implementation 'com.yubico.yubikit:management:2.0.0'
+}
+----
+
+
+The following functionality has been moved:
+
+* Android specific functionality from the `otp` module, such as the
+  `OtpActivity`, has been moved to the `android` module and made more generic.
+* Configuration and functionality related to the YubiKey OTP Application has
+  been moved from the `mgmt` module into the `yubiotp` module, as part of the
+  new `YubiOtpSession`.
+* Exceptions have been moved from the `com.yubico.yubikit.exceptions` package
+  to the various other packages where they are most relevant.
+
+
+=== Class renames
+Several classes and interfaces have been renamed in accordance to the
+terminology used in the
+link:https://developers.yubico.com/Mobile/Concepts.html[Concepts] page.
+
+The following have been renamed:
+
+* `UsbSession` and `NfcSession` are now `UsbYubiKeyDevice` and
+  `NfcYubiKeyDevice`.
+* `XYZApplication` is now `XYZSession` to better reflect its purpose: It
+  represents an established session with an Application running on a YubiKey.
+* `Iso7816Connection` is now `SmartCardConnection`.
+
+
+=== Listening for devices
+Just as before the `YubiKitManager` class is used to listen for YubiKeys over
+both USB and NFC, using the `startUsbDiscovery` and `startNfcDiscovery`
+methods. These methods used to take an instance of `UsbSessionListener` or
+`NfcSessionListener`, respectively. These classes have been replaced with the
+more generic `Callback<T>` interface.
+
+==== Connecting over USB
+
+YubiKit 1.0:
+[source,java]
+----
+yubiKitManager.startUsbDiscovery(new UsbConfiguration(), new UsbSessionListener() {
+  @Override
+  public void onSessionReceived(UsbSession session, boolean hasPermissions) {
+    // A YubiKey was plugged in
+  }
+
+  @Override
+  public void onSessionRemoved(UsbSession session) {
+    // Do something when the YubiKey is removed
+  }
+
+  @Override
+  public void onRequestPermissionsResult(UsbSession session, boolean isGranted) {
+    // Using the default UsbConfiguration this will never happen, as permission will automatically
+    // be requested by the YubiKitManager prior to invoking onSessionReceived.
+  }
+});
+----
+
+YubiKit 2.0:
+[source,java]
+----
+yubiKitManager.startUsbDiscovery(new UsbConfiguration(), device -> {
+  // A YubiKey was plugged in
+  if(!device.hasPermission()) {
+    // Using the default UsbConfiguration this will never happen, as permission will automatically
+    // be requested by the YubiKitManager, and this method won't be invoked unless it is granted.
+  }
+
+  device.setOnClosed(() -> {
+    // Do something when the YubiKey is removed
+  }))
+});
+----
+
+When using the default configuration, permissions will be handled by the
+YubiKitManager and the caller doesn't need to check if the user has granted
+permission for the device. If this handling is disabled then the
+`hasPermission` method can be used to check for this, and the standard Android
+USB Host API can be used to request permission for the device.
+
+==== Connecting over NFC
+For NFC the changes are more subtle. The NfcSessionListener is replaced with a
+Callback<NfcYubiKeyDevice>, and `NfcDisabledException` and
+`NfcNotFoundException` are replaced with a single `NfcNotAvailableException`.
+
+YubiKit 1.0:
+[source,java]
+----
+try {
+  yubiKitManager.startNfcDiscovery(new NfcConfiguration(), activity, new NfcSessionListener() {
+    void onSessionReceived(NfcSession session) {
+      // A YubiKey was brought within NFC range
+    }
+  });
+} catch (NfcDisabledException e) {
+  // NFC is available, but turned off
+} catch (NfcNotFoundException e) {
+  // NFC is not available so this feature does not work on this device
+}
+----
+
+YubiKit 2.0:
+[source,java]
+----
+try {
+  yubiKitManager.startNfcDiscovery(new NfcConfiguration(), activity, device -> {
+    // A YubiKey was brought within NFC range
+  });
+} catch (NfcNotAvailableException e) {
+  if (e.isDisabled()) {
+    // NFC is available, but turned off
+  } else {
+    // NFC is not available so this feature does not work on this device
+  }
+}
+----
+
+=== Opening connections
+In YubiKit 1.0 opening a Connection to a YubiKey was a synchronous operation.
+Due to the nature of how YubiKeys work, only a single Connection can be used at
+one time, and the user was responsible for ensuring Connection access never
+happened from multiple threads at once. For this reason it was recommended to
+place all such calls within the context of a single Thread, by using an
+ExecutorService:
+
+[source,java]
+----
+// Set up and manage the lifecycle of an ExecutorService:
+ExecutorService executorService = ...
+
+executorService.execute {
+  //connect to the key / start the connection
+  try(Iso7816Connection connection = session.openIso7816Connection()) {
+    // Send commands to the connection, read responses, etc.
+  } catch (IOException e) {
+    // handle error that occurred during communication with key
+  }
+}
+----
+
+In YubiKit 2.0 this has instead become an asynchronous operation, which you can
+invoke from any Thread. The callback will be run in a Thread managed by the
+YubiKitManager, so that the caller doesn't need to worry about it:
+
+[source,java]
+----
+// Request a new Connection. When available, the callback will be invoked in a worker thread.
+device.requestConnection(SmartCardConnection.class, result -> {
+  // The result is a Result<SmartCardConnection, IOException>, which represents either a successful connection, or an error.
+  try {
+    SmartCardConnection connection = result.getValue();  // This may throw an IOException
+    // Send commands to the connection, read responses, etc.
+  } catch(IOException e) {
+    // Handle errors
+  }
+});
+----

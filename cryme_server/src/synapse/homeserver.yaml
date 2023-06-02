@@ -1,0 +1,36 @@
+server_name: XXX_TO_BE_FILLED
+pid_file: /app/sources/homeserver.pid
+listeners:
+  - port: 8008
+    tls: false
+    type: http
+    x_forwarded: true
+    bind_addresses: ['0.0.0.0']
+    resources:
+      - names: [client, federation]
+        compress: false
+database:
+  name: psycopg2
+  args:
+    user: cryme
+    password: cryme
+    database: cryme
+    host: cryme-db
+    port: 5432
+    cp_min: 5
+    cp_max: 10
+allow_unsafe_locale: true
+log_config: "/app/XXX_TO_BE_FILLED.log.config"
+media_store_path: "/app/sources/media_store"
+enable_registration: true
+enable_registration_without_verification: true
+registration_shared_secret: "Pg9&N9@5sxyr6a~.~5-R8h7UG0.gQsDkE#=Djpjsm70&,,o,4N"
+report_stats: true
+macaroon_secret_key: "2YwP+r=2aFyEVBWa&qp,6Y,e~TNHE+qy.u+7#hEa8BMGkhi-s:"
+form_secret: ";b;csjQJerBfc9R3PiZ5JQqu_.;1f3dEZg_lKj9LteHaxE.~0a"
+signing_key_path: "/app/XXX_TO_BE_FILLED.key"
+trusted_key_servers:
+ - server_name: XXX_TO_BE_FILLED
+user_directory:
+    search_all_users: true
+    prefer_local_users: true

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/keys_backup_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:colorBackground"
+    tools:context=".features.crypto.keysbackup.setup.KeysBackupSetupStep2Fragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/keys_backup_setup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/layout_horizontal_margin"
+        android:paddingEnd="@dimen/layout_horizontal_margin">
+
+        <TextView
+            android:id="@+id/keys_backup_setup_step2_text_title"
+            style="@style/Widget.Vector.TextView.HeadlineMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/keys_backup_setup_step2_text_title"
+            android:textAlignment="center"
+            android:textColor="?vctr_content_primary"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/keys_backup_setup_step2_text_description"
+            style="@style/Widget.Vector.TextView.Body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/keys_backup_setup_step2_text_description"
+            android:textAlignment="center"
+            android:textColor="?vctr_content_secondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/keys_backup_setup_step2_text_title" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/keys_backup_setup_step2_passphrase_enter_til"
+            style="@style/Widget.Vector.TextInputLayout.Password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/keys_backup_setup_step2_text_description">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/keys_backup_setup_step2_passphrase_enter_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/passphrase_create_passphrase"
+                android:inputType="textPassword"
+                android:maxLines="3" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <im.vector.app.core.ui.views.PasswordStrengthBar
+            android:id="@+id/keys_backup_setup_step2_passphrase_strength_level"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            app:layout_constraintEnd_toEndOf="@id/keys_backup_setup_step2_passphrase_enter_til"
+            app:layout_constraintStart_toStartOf="@id/keys_backup_setup_step2_passphrase_enter_til"
+            app:layout_constraintTop_toBottomOf="@id/keys_backup_setup_step2_passphrase_enter_til" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/keys_backup_setup_step2_passphrase_confirm_til"
+            style="@style/Widget.Vector.TextInputLayout.Password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/keys_backup_setup_step2_passphrase_strength_level">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/keys_backup_setup_step2_passphrase_confirm_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/passphrase_confirm_passphrase"
+                android:inputType="textPassword"
+                android:maxLines="3" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/keys_backup_setup_step2_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/keys_backup_setup_step2_button_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/keys_backup_setup_step2_passphrase_confirm_til" />
+
+        <TextView
+            android:id="@+id/keys_backup_setup_step2_recovery_key_alternative"
+            style="@style/Widget.Vector.TextView.Body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/keys_backup_setup_step1_recovery_key_alternative"
+            android:textAlignment="center"
+            android:textColor="?vctr_content_primary"
+            app:layout_constraintTop_toBottomOf="@id/keys_backup_setup_step2_button" />
+
+        <Button
+            android:id="@+id/keys_backup_setup_step2_skip_button"
+            style="@style/Widget.Vector.Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/layout_vertical_margin"
+            android:maxWidth="@dimen/button_max_width"
+            android:text="@string/keys_backup_setup_step2_skip_button_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/keys_backup_setup_step2_recovery_key_alternative" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

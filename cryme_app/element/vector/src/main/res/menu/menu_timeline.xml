@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/timeline_setting"
+        android:icon="@drawable/ic_settings_x"
+        android:title="@string/settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/search"
+        android:title="@string/search"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/invite"
+        android:title="@string/action_invite"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/video_call"
+        android:icon="@drawable/ic_video"
+        android:title="@string/action_video_call"
+        android:visible="false"
+        app:iconTint="?colorPrimary"
+        app:showAsAction="always"
+        tools:visible="true" />
+
+    <item
+        android:id="@+id/voice_call"
+        android:icon="@drawable/ic_phone"
+        android:title="@string/call"
+        android:visible="false"
+        app:iconTint="?colorPrimary"
+        app:showAsAction="always"
+        tools:visible="true" />
+
+    <item android:id="@+id/join_conference"
+        android:title="@string/action_join"
+        app:actionLayout="@layout/layout_join_conference_action"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/open_matrix_apps"
+        android:title="@string/room_add_matrix_apps"
+        app:actionLayout="@layout/custom_action_item_layout_badge"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/dev_tools"
+        android:icon="@drawable/ic_settings_root_general"
+        android:title="@string/dev_tools_menu_name"
+        android:visible="false"
+        app:showAsAction="never"
+        tools:visible="true" />
+
+</menu>

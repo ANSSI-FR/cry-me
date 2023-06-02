@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/roomPreviewNoPreviewToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/roomPreviewNoPreviewToolbarAvatar"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:importantForAccessibility="no"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@sample/room_round_avatars" />
+
+                    <TextView
+                        android:id="@+id/roomPreviewNoPreviewToolbarTitle"
+                        style="@style/Widget.Vector.TextView.HeadlineMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="?vctr_content_primary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@id/roomPreviewNoPreviewToolbarAvatar"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@sample/users.json/data/displayName" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+            <ProgressBar
+                android:id="@+id/roomPreviewPeekingProgress"
+                style="@style/Widget.Vector.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="14dp"
+                android:layout_gravity="center"
+                android:indeterminate="true" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/layout_horizontal_margin"
+                android:paddingEnd="@dimen/layout_horizontal_margin">
+
+                <ImageView
+                    android:id="@+id/roomPreviewNoPreviewAvatar"
+                    android:layout_width="128dp"
+                    android:layout_height="128dp"
+                    android:layout_marginTop="60dp"
+                    android:importantForAccessibility="no"
+                    tools:src="@sample/room_round_avatars" />
+
+                <TextView
+                    android:id="@+id/roomPreviewNoPreviewName"
+                    style="@style/Widget.Vector.TextView.Subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="56dp"
+                    android:gravity="center"
+                    android:textColor="?vctr_content_primary"
+                    android:textStyle="bold"
+                    tools:text="@sample/rooms.json/data/name" />
+
+                <TextView
+                    android:id="@+id/roomPreviewNoPreviewTopic"
+                    style="@style/Widget.Vector.TextView.Subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/layout_vertical_margin"
+                    android:autoLink="web"
+                    android:gravity="center"
+                    android:textColor="?vctr_content_secondary"
+                    tools:text="@sample/rooms.json/data/topic" />
+
+                <TextView
+                    android:id="@+id/roomPreviewNoPreviewLabel"
+                    style="@style/Widget.Vector.TextView.Body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:gravity="center"
+                    android:textColor="?vctr_content_secondary"
+                    tools:text="@string/room_preview_no_preview" />
+
+                <TextView
+                    android:id="@+id/roomPreviewNoPreviewError"
+                    style="@style/Widget.Vector.TextView.Subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/layout_vertical_margin"
+                    android:gravity="center"
+                    android:textColor="?colorError"
+                    android:visibility="gone"
+                    tools:text="Error"
+                    tools:visibility="visible" />
+
+                <im.vector.app.core.platform.ButtonStateView
+                    android:id="@+id/roomPreviewNoPreviewJoin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/layout_vertical_margin"
+                    android:layout_marginBottom="@dimen/layout_vertical_margin"
+                    android:minWidth="120dp"
+                    app:bsv_button_text="@string/action_join"
+                    app:bsv_loaded_image_src="@drawable/ic_tick"
+                    app:bsv_use_flat_button="false" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

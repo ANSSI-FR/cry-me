@@ -1,0 +1,70 @@
+# filename patterns
+*~
+.*.swp
+.#*
+*.deb
+*.egg
+*.egg-info
+*.lock
+*.py[cod]
+*.snap
+*.tac
+_trial_temp/
+_trial_temp*/
+/out
+.DS_Store
+__pycache__/
+
+# We do want the poetry and cargo lockfile.
+!poetry.lock
+!Cargo.lock
+
+# stuff that is likely to exist when you run a server locally
+/*.db
+/*.log
+/*.log.*
+/*.log.config
+/*.pid
+/.python-version
+/*.signing.key
+/env/
+/.venv*/
+/homeserver*.yaml
+/logs
+/media_store/
+/uploads
+
+# For direnv users
+/.envrc
+
+# IDEs
+/.idea/
+/.ropeproject/
+/.vscode/
+
+# build products
+!/.coveragerc
+/.coverage*
+/.mypy_cache/
+/.tox
+/.tox-pg-container
+/build/
+/coverage.*
+/dist/
+/docs/build/
+/htmlcov
+/pip-wheel-metadata/
+
+# docs
+book/
+
+# complement
+/complement-*
+/master.tar.gz
+
+# rust
+/target/
+/synapse/*.so
+
+# Poetry will create a setup.py, which we don't want to include.
+#/setup.py

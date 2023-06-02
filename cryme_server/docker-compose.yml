@@ -1,0 +1,42 @@
+version: '3'
+services:
+  cryme-nginx:
+    image: nginx:alpine
+    container_name: cryme-nginx
+    ports:
+      - 443:443
+    networks:
+      - cryme-internal
+      - cryme-external
+    volumes:
+      - ./src/nginx/synapse.conf:/etc/nginx/conf.d/synapse.conf
+      - ./src/nginx/cryme.key:/etc/ssl/private/cryme.key
+      - ./src/nginx/cryme.crt:/etc/ssl/private/cryme.crt
+
+  cryme-synapse:
+    image: anssi/intercesti2022-cryme-synapse:latest
+    container_name: cryme-synapse
+    ports:
+      - 8008:8008
+    networks:
+      - cryme-internal
+    environment:
+      SYNAPSE_SERVER_NAME: $SYNAPSE_SERVER_NAME
+
+  cryme-db:
+    image: postgres:13-bullseye
+    container_name: cryme-db
+    environment:
+      POSTGRES_DB: cryme
+      POSTGRES_USER: cryme
+      POSTGRES_PASSWORD: cryme
+      POSTGRES_INITDB_ARGS: '--encoding=UTF-8 --lc-collate=C --lc-ctype=C'
+    ports:
+      - 5432:5432
+    networks:
+      - cryme-internal
+
+networks:
+  cryme-external:
+  cryme-internal:
+    internal: true

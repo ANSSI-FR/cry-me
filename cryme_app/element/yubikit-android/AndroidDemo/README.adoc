@@ -1,0 +1,11 @@
+== YubiKit Android Demo
+This Android Demo app serves as a sample of how to use the various YubiKit
+modules to connect to and exercise the functionality provided by them. Each
+application module is represented in its own view in the app, and showcases some
+basic functionality of each supported YubiKey application.
+
+
+=== Running the app
+To get started, simply clone the git repository, open it as a project in
+Android Studio, and build and run it from there. Note that you will need a
+supported YubiKey to be able to test the functionality.

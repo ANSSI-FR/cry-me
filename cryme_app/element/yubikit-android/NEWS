@@ -1,0 +1,67 @@
+* Version 2.0.0 (released 2021-04-01)
+ ** BACKWARDS INCOMPATIBLE: Major structural overhaul from 1.0.
+ ** The yubikit module is replaced by the core and android modules.
+ ** The otp module had been renamed to yubiotp.
+ ** Several classes have been renamed and/or moved.
+ ** Connection handling is now asynchronous.
+
+
+* Version 2.0.0-beta02 (released 2021-02-24)
+ ** Connection handling is now asynchronous.
+ ** YubiKitManager listeners have been replaced with more generic Callbacks.
+ ** Release artifacts are compiled to run on Java 8.
+
+
+* Version 2.0.0-beta01 (released 2020-12-07)
+ ** Public preview of 2.0.0, a major restructuring of modules.
+
+
+* Version 1.0.0 (released 2020-06-10)
+ ** Documentation improvements.
+ ** Removal of unused code and properties.
+ ** Dependencies updated.
+ ** yubikit: ATR is read upon opening an Iso7816Connection (USB).
+ ** otp: The KeyListener interface is no longer public.
+
+
+* Version 1.0.0-beta06 (released 2020-05-08)
+ ** Various naming changes to classes and methods to better represent what they do.
+ ** Various additional refactorings and minor changes to improve readability and consistency.
+ ** Make the NFC backend extensible so that it can be customized to provide better compatibility.
+ ** Restructure Exception classes to be more consistent.
+ ** OATH module improvements.
+ ** OTP module improvements.
+ ** QR code functionality moved to the demo application.
+ ** FIDO2 module removed.
+ ** 'Smartcard demo' removed.
+
+
+* Version 1.0.0-beta05 (released 2020-03-31)
+ ** yubikit: Provides callback to users on whether permissions (for USB plug-in device) from user were accepted or denied.
+ ** yubikit: Provides configurations mechanism for NFC discovery (e.g. play sound, read NDEF tag, etc.).
+ ** otp: Provides API to parse YubiOTP from URI.
+ ** otp: Supports other keyboard layouts for YubiOTP data (static passwords).
+ ** oath: Fixing parsing issues of OATH credentials (for accounts that have empty issuer or contain “/” or “:”).
+ ** piv: Fixing PIV signing (issue with RSA PKCS1.15 padding).
+ ** fido: Allow launching of FIDO intents from fragment as well as from activity.
+
+
+* Version 1.0.0-beta04 (released 2020-02-06)
+ ** Added YubiKey configuration capabilities, programming OTP slots.
+ ** HMAC-SHA1 challenge-response.
+
+
+* Version 1.0.0-beta03 (released 2019-10-15)
+ ** Making QR/play-services-vision dependency optional for OATH module.
+
+
+* Version 1.0.0-beta02 (released 2019-10-04)
+ ** Smart Card functionality based on the Personal Identity Verification (PIV) interface.
+ ** Management API to enable/disable interfaces on YubiKey.
+
+
+* Version 1.0.0-beta01 (released 2019-08-06)
+ ** Supports raw APDU communication with YubiKey over NFC and USB.
+ ** Provides high level API for OATH applet.
+ ** Provide FIDO2 wrappers and end-to-end demo.
+ ** Yubico OTP.

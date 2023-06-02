@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:colorBackground">
+
+    <androidx.core.widget.NestedScrollView style="@style/LoginFormScrollView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout style="@style/LoginFormContainer">
+
+            <ImageView
+                style="@style/LoginLogo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/loginSignupSigninServerIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:importantForAccessibility="no"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loginLogo"
+                app:tint="?vctr_content_primary"
+                tools:ignore="MissingPrefix,UnknownId"
+                tools:src="@drawable/ic_logo_matrix_org"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/loginSignupSigninTitle"
+                style="@style/Widget.Vector.TextView.Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:textColor="?vctr_content_primary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loginSignupSigninServerIcon"
+                app:layout_goneMarginTop="0dp"
+                tools:text="@string/login_connect_to" />
+
+            <TextView
+                android:id="@+id/loginSignupSigninText"
+                style="@style/Widget.Vector.TextView.Body"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="27dp"
+                android:gravity="start"
+                android:textColor="?vctr_content_secondary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loginSignupSigninTitle"
+                tools:text="@string/login_server_matrix_org_text" />
+
+            <!-- Sign up or sign in SSO -->
+            <Button
+                android:id="@+id/loginSignupSigninSubmit"
+                style="@style/Widget.Vector.Button.Login"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="38dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loginSignupSigninText"
+                tools:text="@string/login_signup" />
+
+            <!-- Sign in or gone -->
+            <Button
+                android:id="@+id/loginSignupSigninSignIn"
+                style="@style/Widget.Vector.Button.Outlined.Login"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="@string/login_signin"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/loginSignupSigninSignInSocialLoginContainer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loginSignupSigninSubmit"
+                tools:visibility="visible" />
+
+            <!-- Social Login buttons -->
+            <LinearLayout
+                android:id="@+id/loginSignupSigninSignInSocialLoginContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loginSignupSigninSignIn"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/loginSignupSigninSocialLoginHeader"
+                    style="@style/Widget.Vector.TextView.Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="27dp"
+                    android:gravity="center"
+                    android:text="@string/login_social_continue"
+                    android:textColor="?vctr_content_secondary" />
+
+                <im.vector.app.features.login.SocialLoginButtonsView
+                    android:id="@+id/loginSignupSigninSocialLoginButtons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:signMode="continue_with" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>
+

@@ -1,0 +1,22 @@
+apply plugin: 'java-library'
+
+dependencies {
+    api project(':core')
+
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+
+    implementation 'commons-codec:commons-codec:1.15'
+
+    testImplementation 'junit:junit:4.13.2'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+compileJava {
+    options.compilerArgs.addAll(['--release', '8'])
+}
+
+ext.pomName = "Yubico YubiKit ${project.name.capitalize()}"
+description = "This library provides OATH functionality of YubiKey which allows to have an authenticator application and store secrets on YubiKey. Provides TOTP or HOTP."
+
+apply from: rootProject.file('publish.gradle')

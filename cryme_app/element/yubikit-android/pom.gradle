@@ -1,0 +1,23 @@
+project.ext.pomData = {
+    name = project.ext.pomName //"Yubico YubiKit ${project.name.capitalize()}"
+    description = project.description
+    url = "https://github.com/Yubico/yubikit-android/tree/master/${project.name}"
+    licenses {
+        license {
+            name = 'The Apache License, Version 2.0'
+            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+        }
+    }
+    developers {
+        developer {
+            id = 'dainnilsson'
+            name = 'Dain Nilsson'
+            email = 'dain@yubico.com'
+        }
+    }
+    scm {
+        connection = 'scm:git:https://github.com/Yubico/yubikit-android.git'
+        developerConnection = 'scm:git:ssh://github.com/Yubico/yubikit-android.git'
+        url = 'https://github.com/Yubico/yubikit-android'
+    }
+}

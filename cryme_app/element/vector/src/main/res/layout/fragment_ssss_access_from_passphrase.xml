@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ssss__root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="32dp"
+        android:paddingBottom="32dp">
+
+        <ImageView
+            android:id="@+id/ssss_shield"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="@dimen/layout_horizontal_margin"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_security_phrase_24dp"
+            app:layout_constraintBottom_toBottomOf="@id/ssss_restore_with_passphrase"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ssss_restore_with_passphrase"
+            app:tint="?vctr_content_primary"
+            tools:ignore="MissingPrefix" />
+
+        <TextView
+            android:id="@+id/ssss_restore_with_passphrase"
+            style="@style/Widget.Vector.TextView.HeadlineMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/recovery_passphrase"
+            android:textColor="?vctr_content_primary"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ssss_shield"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ssss_restore_with_passphrase_warning_text"
+            style="@style/Widget.Vector.TextView.Subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textColor="?vctr_content_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ssss_restore_with_passphrase"
+            tools:text="@string/enter_secret_storage_passphrase_or_key" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ssss_passphrase_enter_til"
+            style="@style/Widget.Vector.TextInputLayout.Password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/layout_horizontal_margin"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="@dimen/layout_horizontal_margin"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ssss_restore_with_passphrase_warning_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ssss_passphrase_enter_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/passphrase_enter_passphrase"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:maxLines="3"
+                android:singleLine="false" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/ssss_passphrase_submit"
+            style="@style/Widget.Vector.Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/layout_horizontal_margin"
+            android:text="@string/_continue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ssss_passphrase_enter_til" />
+
+        <TextView
+            android:id="@+id/ssss_passphrase_or"
+            style="@style/Widget.Vector.TextView.HeadlineMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/or"
+            android:textColor="?vctr_content_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ssss_passphrase_submit" />
+
+        <Button
+            android:id="@+id/ssss_passphrase_use_key"
+            style="@style/Widget.Vector.Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/use_recovery_key"
+            app:icon="@drawable/ic_security_key_24dp"
+            app:layout_constraintBottom_toTopOf="@id/ssss_passphrase_reset"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ssss_passphrase_or"
+            tools:ignore="MissingPrefix" />
+
+        <im.vector.app.core.ui.views.BottomSheetActionButton
+            android:id="@+id/ssss_passphrase_reset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:actionTitle="@string/bad_passphrase_key_reset_all_action"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ssss_passphrase_use_key"
+            app:leftIcon="@drawable/ic_alert_triangle"
+            app:tint="?colorError"
+            app:titleTextColor="?vctr_content_secondary" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

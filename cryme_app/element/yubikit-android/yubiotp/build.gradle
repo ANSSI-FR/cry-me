@@ -1,0 +1,21 @@
+apply plugin: 'java-library'
+
+dependencies {
+    api project(':core')
+
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+    compileOnly 'com.github.spotbugs:spotbugs-annotations:4.2.2'
+
+    testImplementation 'junit:junit:4.13.2'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+compileJava {
+    options.compilerArgs.addAll(['--release', '8'])
+}
+
+ext.pomName = "Yubico YubiKit ${project.name.capitalize()}"
+description = "This module provides an interface to configure the YubiKey OTP application, which can be used to program a YubiKey slot with a Yubico OTP, OATH-HOTP, HMAC-SHA1 Challenge-Response, or static password credential."
+
+apply from: rootProject.file('publish.gradle')

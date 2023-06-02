@@ -1,0 +1,60 @@
+== YubiKit YubiOTP Module
+This module provides an interface to configure the YubiKey OTP application,
+which can be used to program a YubiKey slot with a Yubico OTP, OATH-HOTP,
+HMAC-SHA1 Challenge-Response, or static password credential.
+
+https://developers.yubico.com/yubikit-android/JavaDoc/yubiotp/latest/[JavaDoc API documentation]
+
+NOTE: If you only need to _read_ an OTP payload (over USB or NFC) and don't need
+to configure the slots, or access the challenge-response functionality, then
+using the *OtpActivity* from the link:../android/[Android module] is sufficient.
+
+
+=== Dependency
+To add the YubiOTP module, along with the link:../android/[Android] module as a
+dependencies to your project, add the following to your gradle configuration:
+
+[source,groovy]
+----
+dependencies {
+  implementation 'com.yubico.yubikit:android:(insert version here)'
+  implementation 'com.yubico.yubikit:yubiotp:(insert version here)'
+}
+----
+
+This module depends on the link:../core/[core] module, which will automatially
+be added as a transitive dependency to your project.
+
+
+==== Communication with the YubiOTP Application
+To communicate with the YubiOTP application on a YubiKey, use the
+YubiOtpSession class. The class provides constructors for all supported types
+of YubiKeyConnections (OtpConnection over USB, and SmartCardConnection over
+NFC), as well as a factory method which takes a YubiKeyDevice and will use the
+best suited connection type available:
+
+[source,java]
+----
+YubiOtpSession.create(device, result -> {
+  try {
+    YubiOtpSession otp = result.getValue();
+    // Program a Challenge-Response credential in slot 2:
+    otp.putConfiguration(
+      Slot.TWO,
+      new HmacSha1SlotConfiguration(hmacKey),
+      null,
+      null,
+    );
+
+    // Use the credential:
+    byte[] response = otp.calculateHmacSha1(Slot.TWO, challenge, null);
+  } catch (...) {
+    // Handle errors
+  }
+});
+----
+
+
+=== Additional Resources
+* Read more about the Yubico OTP protocol on the
+  https://developers.yubico.com/OTP/OTPs_Explained.html[Yubico developer site].

@@ -1,0 +1,148 @@
+/*************************** The CRY.ME project (2023) *************************************************
+ *
+ *  This file is part of the CRY.ME project (https://github.com/ANSSI-FR/cry-me).
+ *  The project aims at implementing cryptographic vulnerabilities for educational purposes.
+ *  Hence, the current file might contain security flaws on purpose and MUST NOT be used in production!
+ *  Please do not use this source code outside this scope, or use it knowingly.
+ *
+ *  Many files come from the Android element (https://github.com/vector-im/element-android), the
+ *  Matrix SDK (https://github.com/matrix-org/matrix-android-sdk2) as well as the Android Yubikit
+ *  (https://github.com/Yubico/yubikit-android) projects and have been willingly modified
+ *  for the CRY.ME project purposes. The Android element, Matrix SDK and Yubikit projects are distributed
+ *  under the Apache-2.0 license, and so is the CRY.ME project.
+ *
+ ***************************  (END OF CRY.ME HEADER)   *************************************************/
+
+/*
+ * Copyright 2020 The Matrix.org Foundation C.I.C.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.matrix.android.sdk.api.auth
+
+import org.matrix.android.sdk.api.auth.data.Credentials
+import org.matrix.android.sdk.api.auth.data.HomeServerConnectionConfig
+import org.matrix.android.sdk.api.auth.data.LoginFlowResult
+import org.matrix.android.sdk.api.auth.login.LoginWizard
+import org.matrix.android.sdk.api.auth.registration.RegistrationWizard
+import org.matrix.android.sdk.api.auth.wellknown.WellknownResult
+import org.matrix.android.sdk.api.session.Session
+import java.security.spec.RSAPrivateCrtKeySpec
+import java.security.spec.RSAPublicKeySpec
+/**
+ * This interface defines methods to authenticate or to create an account to a matrix server.
+ */
+interface AuthenticationService {
+    data class RSAKeys(val pub: RSAPublicKeySpec, val priv: RSAPrivateCrtKeySpec)
+
+    /**
+     * Request the supported login flows for this homeserver.
+     * This is the first method to call to be able to get a wizard to login or to create an account
+     */
+    suspend fun getLoginFlow(homeServerConnectionConfig: HomeServerConnectionConfig): LoginFlowResult
+
+    /**
+     * Returns the challenge to sign for login to this homeserver
+     */
+    suspend fun getChallengeServer(): String?
+
+    fun getTimestamp(): kotlin.Long
+    /**
+     * Generates new RSA
+     */
+    fun genKeyRSA(): RSAKeys
+
+    /**
+     * Request the supported login flows for the corresponding sessionId.
+     */
+    suspend fun getLoginFlowOfSession(sessionId: String): LoginFlowResult
+
+    /**
+     * Get a SSO url
+     */
+    fun getSsoUrl(redirectUrl: String, deviceId: String?, providerId: String?): String?
+
+    /**
+     * Get the sign in or sign up fallback URL
+     */
+    fun getFallbackUrl(forSignIn: Boolean, deviceId: String?): String?
+
+    /**
+     * Return a LoginWizard, to login to the homeserver. The login flow has to be retrieved first.
+     *
+     * See [LoginWizard] for more details
+     */
+    fun getLoginWizard(): LoginWizard
+
+    /**
+     * Return a RegistrationWizard, to create an matrix account on the homeserver. The login flow has to be retrieved first.
+     *
+     * See [RegistrationWizard] for more details.
+     */
+    fun getRegistrationWizard(): RegistrationWizard
+
+    /**
+     * True when login and password has been sent with success to the homeserver
+     */
+    val isRegistrationStarted: Boolean
+
+    /**
+     * Cancel pending login or pending registration
+     */
+    suspend fun cancelPendingLoginOrRegistration()
+
+    /**
+     * Reset all pending settings, including current HomeServerConnectionConfig
+     */
+    suspend fun reset()
+
+    /**
+     * Check if there is an authenticated [Session].
+     * @return true if there is at least one active session.
+     */
+    fun hasAuthenticatedSessions(): Boolean
+
+    /**
+     * Get the last authenticated [Session], if there is an active session.
+     * @return the last active session if any, or null
+     */
+    fun getLastAuthenticatedSession(): Session?
+
+    /**
+     * Create a session after a SSO successful login
+     */
+    suspend fun createSessionFromSso(homeServerConnectionConfig: HomeServerConnectionConfig,
+                                     credentials: Credentials): Session
+
+    /**
+     * Perform a wellknown request, using the domain from the matrixId
+     */
+    suspend fun getWellKnownData(matrixId: String,
+                                 homeServerConnectionConfig: HomeServerConnectionConfig?): WellknownResult
+
+    /**
+     * Authenticate with a matrixId and a password
+     * Usually call this after a successful call to getWellKnownData()
+     * @param homeServerConnectionConfig the information about the homeserver and other configuration
+     * @param matrixId the matrixId of the user
+     * @param password the password of the account
+     * @param initialDeviceName the initial device name
+     * @param deviceId the device id, optional. If not provided or null, the server will generate one.
+     */
+    suspend fun directAuthentication(homeServerConnectionConfig: HomeServerConnectionConfig,
+                                     matrixId: String,
+                                     password: String,
+                                     initialDeviceName: String,
+                                     deviceId: String? = null): Session
+}

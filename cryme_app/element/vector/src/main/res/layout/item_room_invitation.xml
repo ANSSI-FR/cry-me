@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemRoomInvitationLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:colorBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    tools:viewBindingIgnore="true">
+
+    <ImageView
+        android:id="@+id/roomInvitationAvatarImageView"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@sample/room_round_avatars" />
+
+    <!-- Margin bottom does not work, so I use space -->
+    <Space
+        android:id="@+id/roomInvitationAvatarBottomSpace"
+        android:layout_width="0dp"
+        android:layout_height="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/roomInvitationAvatarImageView"
+        tools:layout_marginStart="20dp" />
+
+    <TextView
+        android:id="@+id/roomInvitationNameView"
+        style="@style/Widget.Vector.TextView.Subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_horizontal_margin"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="20dp"
+        android:drawablePadding="8dp"
+        android:duplicateParentState="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="?vctr_content_primary"
+        app:drawableEndCompat="@drawable/ic_arrow_right"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/roomInvitationAvatarImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@sample/rooms.json/data/name" />
+
+    <TextView
+        android:id="@+id/roomInvitationSubTitle"
+        style="@style/Widget.Vector.TextView.Body"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="?vctr_content_secondary"
+        app:layout_constraintEnd_toEndOf="@id/roomInvitationNameView"
+        app:layout_constraintStart_toStartOf="@id/roomInvitationNameView"
+        app:layout_constraintTop_toBottomOf="@id/roomInvitationNameView"
+        tools:text="@sample/rooms.json/data/topic" />
+
+    <!-- Margin bottom does not work, so I use space -->
+    <Space
+        android:id="@+id/roomLastEventBottomSpace"
+        android:layout_width="0dp"
+        android:layout_height="7dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/roomInvitationSubTitle"
+        tools:layout_marginStart="120dp" />
+
+    <im.vector.app.core.platform.ButtonStateView
+        android:id="@+id/roomInvitationAccept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:minWidth="122dp"
+        app:bsv_button_text="@string/action_accept"
+        app:bsv_loaded_image_src="@drawable/ic_tick"
+        app:bsv_use_flat_button="false"
+        app:layout_constraintEnd_toEndOf="@id/roomInvitationNameView"
+        app:layout_constraintTop_toBottomOf="@id/roomLastEventBottomSpace" />
+
+    <im.vector.app.core.platform.ButtonStateView
+        android:id="@+id/roomInvitationReject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/layout_vertical_margin"
+        android:minWidth="122dp"
+        app:bsv_button_text="@string/action_reject"
+        app:bsv_loaded_image_src="@drawable/ic_tick"
+        app:bsv_use_flat_button="true"
+        app:layout_constraintEnd_toStartOf="@id/roomInvitationAccept"
+        app:layout_constraintTop_toTopOf="@id/roomInvitationAccept" />
+
+    <!-- We use vctr_list_separator_system here for a better rendering -->
+    <View
+        android:id="@+id/roomInvitationDividerView"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="?vctr_list_separator_system"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/roomInvitationAccept" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

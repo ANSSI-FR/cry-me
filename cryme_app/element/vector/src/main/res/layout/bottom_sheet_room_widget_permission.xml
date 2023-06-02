@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?colorSurface"
+    android:orientation="vertical"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <TextView
+        style="@style/Widget.Vector.TextView.HeadlineMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_horizontal_margin"
+        android:layout_marginEnd="@dimen/layout_horizontal_margin"
+        android:layout_marginBottom="8dp"
+        android:text="@string/room_widget_permission_title"
+        android:textColor="?vctr_content_primary"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/widgetPermissionHeader2"
+        style="@style/Widget.Vector.TextView.Subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_horizontal_margin"
+        android:layout_marginEnd="@dimen/layout_horizontal_margin"
+        android:layout_marginBottom="8dp"
+        android:text="@string/room_widget_permission_added_by"
+        android:textColor="?vctr_content_secondary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_horizontal_margin"
+        android:layout_marginTop="@dimen/layout_vertical_margin"
+        android:layout_marginEnd="@dimen/layout_horizontal_margin"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/widgetPermissionOwnerAvatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            tools:src="@sample/user_round_avatars" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/widgetPermissionOwnerDisplayName"
+                style="@style/Widget.Vector.TextView.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="?vctr_content_primary"
+                android:textStyle="bold"
+                tools:text="@sample/users.json/data/displayName" />
+
+            <TextView
+                android:id="@+id/widgetPermissionOwnerId"
+                style="@style/Widget.Vector.TextView.Body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="?vctr_content_secondary"
+                tools:text="@sample/users.json/data/id" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/widgetPermissionSharedInfo"
+        style="@style/Widget.Vector.TextView.Subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_horizontal_margin"
+        android:layout_marginTop="@dimen/layout_vertical_margin_big"
+        android:layout_marginEnd="@dimen/layout_horizontal_margin"
+        android:layout_marginBottom="8dp"
+        android:textColor="?vctr_content_secondary"
+        tools:text="@string/room_widget_permission_shared_info_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_vertical_margin_big"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/widgetPermissionDecline"
+            style="@style/Widget.Vector.Button.Destructive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/layout_vertical_margin"
+            android:text="@string/action_decline"
+            android:textAllCaps="true" />
+
+        <Button
+            android:id="@+id/widgetPermissionContinue"
+            style="@style/Widget.Vector.Button.Positive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/layout_vertical_margin"
+            android:minWidth="160dp"
+            android:text="@string/_continue"
+            android:textAllCaps="true" />
+
+    </LinearLayout>
+
+</LinearLayout>

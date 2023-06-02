@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:colorBackground">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/genericRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:itemSpacing="1dp"
+        tools:listitem="@layout/item_pushgateway" />
+
+    <include
+        android:id="@+id/waiting_view"
+        layout="@layout/merge_overlay_waiting_view" />
+
+</FrameLayout>

@@ -1,0 +1,19 @@
+*.iml
+.gradle
+/local.properties
+# idea files: exclude everything except dictionnaries
+.idea/caches
+.idea/libraries
+.idea/inspectionProfiles
+.idea/*.xml
+.DS_Store
+/build
+/benchmark-out
+/captures
+.externalNativeBuild
+
+/tmp
+/fastlane/private
+/fastlane/report.xml
+
+/library/build

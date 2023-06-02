@@ -1,0 +1,87 @@
+/*************************** The CRY.ME project (2023) *************************************************
+ *
+ *  This file is part of the CRY.ME project (https://github.com/ANSSI-FR/cry-me).
+ *  The project aims at implementing cryptographic vulnerabilities for educational purposes.
+ *  Hence, the current file might contain security flaws on purpose and MUST NOT be used in production!
+ *  Please do not use this source code outside this scope, or use it knowingly.
+ *
+ *  Many files come from the Android element (https://github.com/vector-im/element-android), the
+ *  Matrix SDK (https://github.com/matrix-org/matrix-android-sdk2) as well as the Android Yubikit
+ *  (https://github.com/Yubico/yubikit-android) projects and have been willingly modified
+ *  for the CRY.ME project purposes. The Android element, Matrix SDK and Yubikit projects are distributed
+ *  under the Apache-2.0 license, and so is the CRY.ME project.
+ *
+ ***************************  (END OF CRY.ME HEADER)   *************************************************/
+
+/*
+ * Copyright 2019 New Vector Ltd
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package im.vector.app.features.command
+
+import im.vector.app.features.home.room.detail.ChatEffect
+import org.matrix.android.sdk.api.session.identity.ThreePid
+
+/**
+ * Represent a parsed command
+ */
+sealed class ParsedCommand {
+    // This is not a Slash command
+    object ErrorNotACommand : ParsedCommand()
+
+    object ErrorEmptySlashCommand : ParsedCommand()
+
+    // Unknown/Unsupported slash command
+    class ErrorUnknownSlashCommand(val slashCommand: String) : ParsedCommand()
+
+    // A slash command is detected, but there is an error
+    class ErrorSyntax(val command: Command) : ParsedCommand()
+
+    // Valid commands:
+
+    class SendPlainText(val message: CharSequence) : ParsedCommand()
+    class SendEmote(val message: CharSequence) : ParsedCommand()
+    class SendRainbow(val message: CharSequence) : ParsedCommand()
+    class SendRainbowEmote(val message: CharSequence) : ParsedCommand()
+    class BanUser(val userId: String, val reason: String?) : ParsedCommand()
+    class UnbanUser(val userId: String, val reason: String?) : ParsedCommand()
+    class IgnoreUser(val userId: String) : ParsedCommand()
+    class UnignoreUser(val userId: String) : ParsedCommand()
+    class SetUserPowerLevel(val userId: String, val powerLevel: Int?) : ParsedCommand()
+    class ChangeRoomName(val name: String) : ParsedCommand()
+    class Invite(val userId: String, val reason: String?) : ParsedCommand()
+    class Invite3Pid(val threePid: ThreePid) : ParsedCommand()
+    class JoinRoom(val roomAlias: String, val reason: String?) : ParsedCommand()
+    class PartRoom(val roomAlias: String?) : ParsedCommand()
+    class ChangeTopic(val topic: String) : ParsedCommand()
+    class KickUser(val userId: String, val reason: String?) : ParsedCommand()
+    class ChangeDisplayName(val displayName: String) : ParsedCommand()
+    class ChangeDisplayNameForRoom(val displayName: String) : ParsedCommand()
+    class ChangeRoomAvatar(val url: String) : ParsedCommand()
+    class ChangeAvatarForRoom(val url: String) : ParsedCommand()
+    class SetMarkdown(val enable: Boolean) : ParsedCommand()
+    object ClearScalarToken : ParsedCommand()
+    class SendSpoiler(val message: String) : ParsedCommand()
+    class SendShrug(val message: CharSequence) : ParsedCommand()
+    class SendLenny(val message: CharSequence) : ParsedCommand()
+    object DiscardSession : ParsedCommand()
+    class ShowUser(val userId: String) : ParsedCommand()
+    class SendChatEffect(val chatEffect: ChatEffect, val message: String) : ParsedCommand()
+    class CreateSpace(val name: String, val invitees: List<String>) : ParsedCommand()
+    class AddToSpace(val spaceId: String) : ParsedCommand()
+    class JoinSpace(val spaceIdOrAlias: String) : ParsedCommand()
+    class LeaveRoom(val roomId: String) : ParsedCommand()
+    class UpgradeRoom(val newVersion: String) : ParsedCommand()
+}
