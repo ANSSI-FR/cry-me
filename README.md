@@ -341,7 +341,7 @@ cryme_app_emulation$ ./launch_emulator_usb.sh 1 noyubi
 
 Here is a little demo for the full workflow of local CRY.ME emulation:
 
-https://github.com/jj-anssi/sstic-temporary/assets/5259148/bfbc4ad8-4a12-4a7d-a981-6e49dc3407f8
+https://github.com/ANSSI-FR/cry-me/assets/38430857/dec65f85-1cc8-45e6-ace9-055cf5acd35e
 
 **NOTE**: in this demo video, during the last part emulating CRY.ME with two users, the two Yubikeys
 were simultaneously plugged in during the whole emulation session. Please be aware that the emulator does not support
