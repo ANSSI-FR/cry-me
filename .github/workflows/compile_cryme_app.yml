@@ -1,0 +1,19 @@
+name: Compile CRY.ME app
+on: push
+jobs:
+  compile_from_docker:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout repository
+      - name: checkout repository
+        uses: actions/checkout@v3
+      - name: CRY.ME compilation
+        shell: bash
+        run: |
+          # Launch docker compilation and tar the result
+          cd cryme_app && make app_build_docker && tar acvf cry.me.build.tar.gz build/;
+      - name: CRY.ME archive compiled app
+        uses: actions/upload-artifact@v3
+        with:
+          name: cry.me.build.tar.gz
+          path: cryme_app/cry.me.build.tar.gz

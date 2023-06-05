@@ -1,3 +1,6 @@
+[![compilation](https://github.com/ANSSI-FR/cry-me/actions/workflows/compile_cryme_app.yml/badge.svg?branch=master)](https://github.com/ANSSI-FR/cry-me/actions/workflows/compile_cryme_app.yml)
+[![bundling](https://github.com/ANSSI-FR/cry-me/actions/workflows/bundle_cryme_app.yml/badge.svg?branch=master)](https://github.com/ANSSI-FR/cry-me/actions/workflows/bundle_cryme_app.yml)
+
 # CRY.ME - A Flawed Messaging Application for Educational Purposes
 
 ## The CRY.ME project
@@ -89,6 +92,10 @@ cryme_app$ make app_bundle_src_docker
 ...
 ```
 
+You can also download the bundle from the CI artifacts on
+the [github actions page](https://github.com/ANSSI-FR/cry-me/actions) as bundling the application
+also runs in the CI.
+
 ## The CRY.ME Android compilation
 
 ### Pre-built packages
@@ -115,6 +122,10 @@ Please be aware, however, that the release packages are **not signed**, and henc
 not directly installable on target devices (which is not the case of debug packages). Signing `apk`
 release packages is out of the scope of the project, please refer to the appropriate Android
 resources to achieve this.
+
+You can also download the build bundle from the CI artifacts on
+the [github actions page](https://github.com/ANSSI-FR/cry-me/actions) as compilation of the
+application also runs in the CI.
 
 ### Compilation from scratch
 

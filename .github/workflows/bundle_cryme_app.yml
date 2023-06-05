@@ -1,0 +1,19 @@
+name: Bundle CRY.ME app
+on: push
+jobs:
+  bundle_from_docker:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout repository
+      - name: checkout repository
+        uses: actions/checkout@v3
+      - name: CRY.ME bundling
+        shell: bash
+        run: |
+          # Launch docker compilation
+          cd cryme_app && make app_bundle_src_docker;
+      - name: CRY.ME archive compiled app
+        uses: actions/upload-artifact@v3
+        with:
+          name: cry.me.src.bundle.tar.gz
+          path: cry.me.src.bundle.tar.gz
